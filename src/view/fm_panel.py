@@ -25,7 +25,7 @@ class FileChooserDialogue(Static):
                 SOURCE_TREE     = Explorer()
                 SOURCE_TREE.id  = "Source-dir"
 
-                self.rebuild_sources("./")
+                self.rebuild_sources("./tests/")
                 log("logfile.txt", self.SOURCES)
                 SOURCE_TREE.init_table((str("File Name"), str("Size")), self.SOURCES)
 
