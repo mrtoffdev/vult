@@ -32,11 +32,10 @@ TEST_FILE_ENTRIES = [
 
 def log(logfile: str, entry):
         LOGFILE = 0
-        if os.path.isfile(logfile):
-                LOGFILE     = open(logfile, "at")
-        else:
+        if not os.path.isfile(logfile):
                 open(logfile, "x")
-                LOGFILE     = open(logfile, "at")
+
+        LOGFILE     = open(logfile, "at")
 
         LOGFILE.write(str(entry) + '\n')
         LOGFILE.close()
