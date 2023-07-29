@@ -64,7 +64,7 @@
         margin-right: 6;
         background: #212121;
         overflow: auto;
-        scrollbar-gutter: stable;
+        /*scrollbar-gutter: stable;*/
 }
 
 .full-width {
