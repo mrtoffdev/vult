@@ -25,7 +25,8 @@ class FSearchWidget(Static):
 
         LAYOUT          = Static("FSearchWidget.LAYOUT err")
 
-        def __init__(self, config = None):
+        def __init__(self, config=None):
+                super().__init__()
                 self.CONFIG     = config
                 self.__build_component()
         
