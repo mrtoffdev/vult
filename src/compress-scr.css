@@ -1,0 +1,155 @@
+#Root {
+        background: #131313;
+        margin: 0 0;
+        width: 100vw;
+        /* align: center middle; */
+}
+
+.center-vert {
+        content-align-vertical: middle;
+        align-vertical: middle;
+}
+
+.center-hori {
+        content-align-horizontal: center;
+        align-horizontal: center;
+}
+
+.center-cont {
+        align: center middle;
+}
+
+/* Encoder Section Props*/
+#EncoderSection {
+        width: 35%;
+        padding: 1 3;
+
+        background: #212121;
+}
+
+#EncoderSection Button {
+        height: 3;
+        width: 100%;
+}
+
+#EncoderSection RadioSet {
+        width: 100%;
+}
+
+#Encode-btn {
+        dock: bottom;
+}
+
+/* File Chooser Section Props */
+#FileChooserSection {
+        width: 65%;
+        padding: 1 3;
+
+        background: #252525;
+}
+
+.FCD-section {
+        width: 100%;
+        height: 50%;
+}
+
+.FCD-fs-header {
+        width: 100%;
+        margin-right: 6;
+}
+
+.FCD-fs-view {
+        width: 100%;
+        height: 65h;
+        margin-right: 6;
+        background: #212121;
+        overflow: auto;
+        scrollbar-gutter: stable;
+}
+
+.full-width {
+        width: 100%;
+}
+
+.offset-header {
+        padding-left: 1;
+        padding-bottom: 1;
+}
+
+#Search-widget {
+        height: auto;
+        width: 100%;
+        margin-right: 6;
+        padding: 0 0 1 0;
+        /*background: red;*/
+}
+
+#Search-field {
+        /*width: auto;*/
+}
+
+#Search-button {
+        height: 3;
+        width: auto;
+
+        dock: right;
+}
+
+.top-pad-l {
+        padding-top: 2;
+}
+
+.top-pad-s {
+        padding-top: 1;
+}
+
+.dialogue-header-top {
+        padding-left: 1;
+        padding-bottom: 1;
+}
+
+.dialogue-header-sub {
+        padding-top: 1;
+        padding-left: 1;
+        padding-bottom: 1;
+}
+
+.fdir-entry {
+        width: 100%;
+        height: 1;
+        background: #323232;
+}
+
+.header-col1 {
+        background: #464646;
+}
+
+.header-col2 {
+        background: #3c3c3c;
+}
+
+.fdir-cell-name {
+        width: 80%;
+        overflow: hidden;
+        padding: 0 1;
+}
+
+.fdir-cell-size {
+        width: 20%;
+        padding: 0 1;
+
+        background: #323232;
+}
+
+.btm-pad-sm {
+        padding-bottom: 1;
+}
+
+.mid-size {
+        width: 60w;
+        /* background: red; */
+}
+
+.mid-size Button {
+        width: 100w;
+}
