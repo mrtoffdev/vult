@@ -4,7 +4,7 @@ Runs on any terminal either with a reactive TUI using [Textual](https://github.c
 written in Python, and runs on both Windows and Linux-based operating systems
 
 ---
-> ***📢 Warning: This is a work in progress, and is by no means a functional tool yet. Currently working on developing simpler to use custom textual widgets alongside this project, which is what's mostly occupying development time, and will most likely receive its own repository in the future 📢**
+> **📢 Warning: This is a work in progress, and is by no means a functional tool yet. Currently working on developing simpler to use custom textual widgets alongside this project, which is what's mostly occupying development time, and will most likely receive its own repository in the future 📢**
 ---
 
 ## ⚀ Dependencies:
