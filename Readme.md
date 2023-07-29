@@ -11,7 +11,7 @@ written in Python, and runs on both Windows and Linux-based operating systems
 - [Textual](https://github.com/textualize/textual): TUI library
 - [FFmpeg](https:ffmpeg.com): Core application used for video encoding / decoding
 - [xxHash](https:xxhash.com): Hash implementation for cross referencing & comparing in|out video sizes & resolving duplicates
-- A terminal that supports UTF-8 and Ligatures, preferrably ones that use (Nerd Fonts)[https://nerdfonts.com]
+- A terminal that supports UTF-8 and Ligatures, preferrably ones that use [Nerd Fonts](https://nerdfonts.com)
 
 ## ⚀ Features:
 - **Format Agnostic**: **Automatically** adjusts encoding / decoding parameters for different video formats in the source dir
