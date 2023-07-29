@@ -1,0 +1,10 @@
+/.venv/
+/.idea/
+/src/__pycache__/
+/src/util/__pycache/
+/src/view/__pycache__/
+/src/view/components/__pycache__/
+/tests/real_video1.mp4
+/pyrightconfig.json
+/logfile.txt
+/fs
