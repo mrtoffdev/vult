@@ -89,18 +89,22 @@ class TableEntry(Static):
         # Default Configuration
         ICON_1      = "   "
         ICON_2      = ""
-        ENTRY_VALUE = ("", 0)
+        ENTRY_VALUE = ("Invalid Entry", "NaN")
         ENTRY_ID    = ENTRY_VALUE[0]
 
         # Layout Holder
         LAYOUT = Static()
 
-        def __init__(self, entry: T_str):
+        def __init__(self, entry: T_str = None):
                 super().__init__()
-                self.LAYOUT = TableEntry.__build_component(entry)
+                if entry is not None:
+                        self.LAYOUT = TableEntry.__build_component(entry)
+                else:
+                        self.LAYOUT = TableEntry.__build_component(self.ENTRY_VALUE)
 
         @staticmethod
         def __build_component(entry: T_str):
+
                 return Horizontal(
                         Static(
                                 TableEntry.ICON_1 +
@@ -116,7 +120,7 @@ class TableEntry(Static):
                         ),
 
                         classes="fdir-entry",
-                        id=str(entry[0])
+                        id=str(entry[0].rstrip(".mp4"))
                 )
 
         @staticmethod
@@ -157,26 +161,26 @@ class TableHeader(Static):
                 )
 
 class Table(Widget):
-        '''
+        """
         # Table Widget
-        '''
+        """
         LAYOUT          = Static()
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
 
 class Explorer(Widget):
-        '''
+        """
         # Explorer Widget
         An explorer widget is, by default, composed of two widgets that work together:
                 1. Search Widget
                 2. Table Widget
 
         The Search widget dictates the directory to be explored and iterated through by
-        the Table widget. As such, it is more practical to have a separate widget for 
-        this collaborative function rather than having to create interfaces for each 
+        the Table widget. As such, it is more practical to have a separate widget for
+        this collaborative function rather than having to create interfaces for each
         sub-widget manually in order to create the same effect
-        '''
+        """
         # Tree State
         TABLE_HEADER    = Static("Explorer Table Header Err")
         TABLE_CONTENTS  = reactive([])
@@ -208,9 +212,8 @@ class Explorer(Widget):
                 # Build Table
                 for entry in entries:
                         if entry != ("", ""):
-                                ENTRY = TableEntry()
-                                ENTRY.set_entry(entry)
-                                self.LAYOUT.mount(ENTRY)
+                                ENTRY = TableEntry(entry)
+                                self.TABLE_LAYOUT.mount(ENTRY)
 
         # State Mgmt
         def insert_entries(self, entries: tuple[type[str], type[str]]):
