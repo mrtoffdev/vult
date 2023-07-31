@@ -32,15 +32,19 @@ class EncoderSelectionWidget(Static):
                         yield RadioButton("AV1 (Slowest)", id="av1")
 
 class Application(App[str]):
-        # CSS_PATH        = "compress-scr.css"
 
         def compose(self) -> ComposeResult:
-                yield Horizontal(
-                        Vertical(EncoderDialogue(),     id="EncoderSection"),
-                        Vertical(FileChooserDialogue(), id="FileChooserSection"),
+                # DOM
+                OptionsPanel    = EncoderDialogue()
+                FilesPanel      = FileChooserDialogue()
+
+                LAYOUT  = Horizontal(
+                        Vertical(OptionsPanel,  id="EncoderSection"),
+                        Vertical(FilesPanel,    id="FileChooserSection"),
 
                         id="Root",
                 )
+                yield LAYOUT
 
 # Program Entry Point -----
 if __name__ == '__main__':
