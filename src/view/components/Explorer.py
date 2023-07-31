@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Iterable
 
 from core.typedef import T_str, vec_T_str
+from util.dev_utils import log
 
 '''
         # Explorer Widget
@@ -87,20 +88,22 @@ class ExplorerConfig:
 
 class TableEntry(Static):
         # Default Configuration
-        ICON_1      = "   "
-        ICON_2      = ""
-        ENTRY_VALUE = ("Invalid Entry", "NaN")
-        ENTRY_ID    = ENTRY_VALUE[0]
+        ICON_1          = "   "
+        ICON_2          = ""
 
-        # Layout Holder
-        LAYOUT = Static()
+        # State
+        VALUE           = ("Invalid Entry", "NaN")
+
+        # Layout Props
+        ENTRY_ID        = VALUE[0]
+        LAYOUT          = Static()
 
         def __init__(self, entry: T_str = None):
                 super().__init__()
                 if entry is not None:
                         self.LAYOUT = TableEntry.__build_component(entry)
                 else:
-                        self.LAYOUT = TableEntry.__build_component(self.ENTRY_VALUE)
+                        self.LAYOUT = TableEntry.__build_component(self.VALUE)
 
         @staticmethod
         def __build_component(entry: T_str):
@@ -122,10 +125,6 @@ class TableEntry(Static):
                         classes="fdir-entry",
                         id=str(entry[0].rstrip(".mp4"))
                 )
-
-        @staticmethod
-        def new(entry: T_str) -> Horizontal:
-                return TableEntry.__build_component(entry)
 
         # Todo: (set_entry()) Figure out a better way of re-rendering
         #       the entry than rebuilding the whole component
@@ -209,6 +208,7 @@ class Explorer(Widget):
                 self.TABLE_HEADER = TEMP_HEADER
                 self.TABLE_LAYOUT = VerticalScroll(classes="FCD-fs-view")
 
+                log("log", f"entries: {str(entries)}")
                 # Build Table
                 for entry in entries:
                         if entry != ("", ""):
