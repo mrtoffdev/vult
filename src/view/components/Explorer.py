@@ -143,7 +143,12 @@ class TableHeader(Static):
         ICON_2 = "[] "
 
         # Layout Holder
-        LAYOUT = Static()
+        LAYOUT = Static("TableHeader layout err")
+
+        def __init__(self, header: T_str):
+                super().__init__()
+                if header != ("", ""):
+                        self.set_header(header)
 
         def compose(self) -> ComposeResult:
                 if self.LAYOUT == ():
@@ -188,25 +193,39 @@ class Explorer(Widget):
         SEARCH_LAYOUT   = Static("Explorer Search Layout Err")
         TABLE_LAYOUT    = Static("Explorer Table Layout Err")
 
-        # Widget Builder
-        def build(self) -> Vertical:
-                return Vertical(
+        LAYOUT          = Static("Explorer Root Layout err")
+
+        # ===== DOM Operations =====
+
+        def __init__(self, header: T_str, entries: vec_T_str, *children: Widget):
+                super().__init__(*children)
+                self.TABLE_HEADER       = TableHeader(header)
+                self.TABLE_CONTENTS     = Table(entries)
+                self.LAYOUT = Vertical(
+                        self.TABLE_HEADER,
+                        self.TABLE_LAYOUT,
+                        *children,
+                )
+
+        def build(self) -> None:
+                self.LAYOUT = Vertical(
                         self.SEARCH_LAYOUT,
                         self.TABLE_LAYOUT
                 )
 
         # Render Blank Table
-        def init_table(self, header: T_str, entries: vec_T_str):
+        def __build_component(self, header: T_str, entries: vec_T_str):
                 # Build Header
                 TEMP_HEADER = Static()
                 if header != ("", ""):
                         TEMP_HEADER = TableHeader()
                         TEMP_HEADER.set_header(header)  # Set Default Header
-                        TEMP_HEADER.classes = "FCD-fs-header"
+                        TEMP_HEADER.classes = "w-fill"
 
                 # Set init layout
                 self.TABLE_HEADER = TEMP_HEADER
-                self.TABLE_LAYOUT = VerticalScroll(classes="FCD-fs-view")
+                self.TABLE_LAYOUT = VerticalScroll(classes="w-fill h-fill-p dbg-2")
+                self.TABLE_LAYOUT.classes="table-fixed"
 
                 log("log", f"entries: {str(entries)}")
                 # Build Table
@@ -215,13 +234,13 @@ class Explorer(Widget):
                                 ENTRY = TableEntry(entry)
                                 self.TABLE_LAYOUT.mount(ENTRY)
 
+        def compose(self) -> ComposeResult:
+                yield self.TABLE_HEADER
+                yield self.TABLE_LAYOUT
+
         # State Mgmt
         def insert_entries(self, entries: tuple[type[str], type[str]]):
                 self.TABLE_CONTENTS = entries
 
         def remove_entry(self, id: str):
                 self.query_one('#' + id).remove()
-
-        def compose(self) -> ComposeResult:
-                yield self.TABLE_HEADER
-                yield self.TABLE_LAYOUT
