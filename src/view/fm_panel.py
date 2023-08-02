@@ -40,20 +40,25 @@ class FileChooserDialogue(Static):
 
                 OUT_TREE.init_table(("", ""), [("", "")])
 
-                self.LAYOUT     = Container(
+                self.LAYOUT     = Vertical(
                         # Video Sources [Upper Section]
                         Vertical(
-                                Static("Video Sources Directory:", classes="dialogue-header-top"),
-                                InputForm(),
+                                # Static("Video Sources Directory:", classes="dialogue-header-top"),
+                                InputForm(config={
+                                        "header": "[] View Sources Directory:",
+                                        "s_icon": '',
+                                        "hint"  : "[] Directory Location:",
+                                        "h_icon": ''
+                                }),
                                 SOURCE_TREE,
 
-                                classes="FCD-section",
+                                classes="w-fill h-half-p dbg-1",
                         ),
 
                         # Output & Statistics [Lower Section]
                         Vertical(
-                                Static( "Output Directory:",
-                                        classes="dialogue-header-sub"),
+                                # Static( "Output Directory:",
+                                #         classes="dialogue-header-sub"),
                                 InputForm(),
 
                                 Static("Results:",
