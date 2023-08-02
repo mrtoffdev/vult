@@ -26,7 +26,7 @@ class FileChooserDialogue(Static):
                 log("log", "Init reached")
 
                 # Upper Section
-                SOURCE_TREE     = Explorer()
+                SOURCE_TREE     = Explorer(("File Name", "Size"), [("", "")])
                 SOURCE_TREE.id  = "Source-dir"
 
                 self.rebuild_sources("./tests/")
@@ -35,7 +35,7 @@ class FileChooserDialogue(Static):
 
 
                 # Lower Section
-                OUT_TREE        = Explorer()
+                OUT_TREE        = Explorer(("File Name", "Size"), [("", "")])
                 OUT_TREE.id     = "Out-dir"
 
                 OUT_TREE.init_table(("", ""), [("", "")])
