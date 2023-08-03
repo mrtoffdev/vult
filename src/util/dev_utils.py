@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 INPUT_DIR = [("No Files Selected", 0)]
 
@@ -28,6 +29,26 @@ TEST_FILE_ENTRIES = [
         ("Video_test_test_X", "120GB"),
         ("Video_test_test_X", "120GB"),
 
+]
+
+TEST_PATHS_STR = [
+        "~/dev/Python/Vult/tests/demo_video1.mp4",
+        "~/dev/Python/Vult/tests/demo_video2.mp4",
+        "~/dev/Python/Vult/tests/demo_video3.mp4",
+]
+
+TEST_PATHS = [
+        Path("~/dev/Python/Vult/tests/demo_video1.mp4"),
+        Path("~/dev/Python/Vult/tests/demo_video2.mp4"),
+        Path("~/dev/Python/Vult/tests/demo_video3.mp4"),
+]
+
+TEST_SIZES = [
+        0, 15,20, 15402323, 523, 12
+]
+
+TEST_SIZES_STR = [
+        "0", "15", "20", "15402323", "523", "12"
 ]
 
 def log(logfile: str, entry):
