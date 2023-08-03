@@ -62,30 +62,40 @@ class TableEntry(Static):
 
 class TableHeader(Static):
         # Header State
-        ICON_1 = "[] "
-        ICON_2 = "[] "
+        ICON_1          = "[] "
+        ICON_2          = "[] "
+
+        DEFAULT         = ("Invalid Header", "NaN")
 
         # Layout Holder
-        LAYOUT = Static("TableHeader layout err")
+        LAYOUT          = Static("TableHeader layout err")
 
         def __init__(self, header: T_str):
+                self.parse_cfg(header)
                 super().__init__()
-                if header != ("", ""):
-                        self.set_header(header)
 
-        def compose(self) -> ComposeResult:
-                if self.LAYOUT == ():
-                        yield Static("Invalid Header: Default Header Spawned")
-                else:
-                        yield self.LAYOUT
+        def parse_cfg(self, config: T_str):
+                build = None
+                match config:
+                        case config if type(config) == T_str:
+                                build = config
+                        case None:
+                                build = TableHeader.DEFAULT
 
-        def set_header(self, header: T_str):
+                self.__build_component(build)
+
+        def __build_component(self, config: T_str | None):
                 self.LAYOUT = Horizontal(
-                        Static(self.ICON_1 + str(header[0]), classes="header-col1 fdir-cell-name"),
-                        Static(self.ICON_2 + str(header[1]), classes="header-col2 fdir-cell-size"),
+                        Static(self.ICON_1 + str(config[0]),
+                               classes="header-col1 fdir-cell-name"),
+                        Static(self.ICON_2 + str(config[1]),
+                               classes="header-col2 fdir-cell-size"),
 
                         classes="fdir-entry",
                 )
+
+        def compose(self) -> ComposeResult:
+                yield self.LAYOUT
 
 class Table(Widget):
         """
