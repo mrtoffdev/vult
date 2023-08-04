@@ -30,8 +30,11 @@ class EncoderDialogue(Static):
                 ("MKV : [Matroska Container]", "mkv"),
         ]
 
-        def compose(self) -> ComposeResult:
-                yield Container(
+        LAYOUT          = Static("EncoderDialogue layout err")
+
+        def __init__(self):
+                super().__init__()
+                self.LAYOUT = Container(
                         Static("Select Preset:", classes="dialogue-header-top"),
 
                         Select(self.PRESETS,
@@ -65,8 +68,17 @@ class EncoderDialogue(Static):
                                ),
 
                         Button("Encode Directory: (0 Files)", id="Encode-btn", disabled=True),
+
+                        classes="pad-s"
                 )
 
+        def __build_component(this):
+                pass
+        def compose(self) -> ComposeResult:
+                yield self.LAYOUT
+
+
+        # ===== Events =====
 
         @on(Select.Changed)
         def select_changed(self, event: Select.Changed) -> None:
