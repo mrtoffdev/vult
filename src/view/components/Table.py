@@ -1,5 +1,5 @@
 from textual.app import ComposeResult
-from textual.reactive import Reactive
+from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
@@ -17,7 +17,7 @@ class TableEntry(Static):
 
         # Layout Props
         ENTRY_ID        = VALUE[0]
-        LAYOUT          = Reactive(Static())
+        LAYOUT          = reactive(Static())
 
         def __init__(self, entry: T_str = None):
                 self.parse_cfg(entry)
@@ -106,8 +106,8 @@ TableConfig     = tuple[T_str, vec_T_str] | dict | None
 class Table(Widget):
 
         # State
-        HEADER          = Reactive(("", ""))
-        ENTRIES         = Reactive([("", "")])
+        HEADER          = reactive(("", ""))
+        ENTRIES         = reactive([("", "")])
 
         WIDGET_HEADER   = Static()
         SHOW_HEADER     = False
@@ -116,7 +116,7 @@ class Table(Widget):
         HEADER_LAYOUT   = Static()
         TABLE_LAYOUT    = Static()
 
-        LAYOUT          = Reactive(Static())
+        LAYOUT          = reactive(Static())
 
         def __init__(self, config: TableConfig, *children: Widget):
                 self.parse_cfg(config)
