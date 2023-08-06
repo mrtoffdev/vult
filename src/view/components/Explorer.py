@@ -2,16 +2,16 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.reactive import reactive
 from textual.widgets import DirectoryTree, Static
-from textual.containers import Horizontal, VerticalScroll, Vertical
+from textual.containers import VerticalScroll, Vertical
 
-# Todo: Refactor | Isolate to Core
 from pathlib import Path
 from typing import Iterable
 
 from core.typedef import T_str, vec_T_str
+from .InputForm import InputForm
 from util.dev_utils import log
 
-from .Table import TableHeader, TableEntry, Table
+from .Table import TableHeader, TableEntry
 
 '''
         # Explorer Widget
@@ -35,60 +35,90 @@ class ExpFilter(DirectoryTree):
 
 class ExplorerConfig:
         # Structure
-        __COLUMNS       = ""
+        # COLUMNS       = None
 
         # Alternating Color Scheme
-        __HEADER_BG_1   = ""
-        __HEADER_BG_2   = ""
-        __HEADER_FG     = "#FFFFFF"
+        HEADER_BG_1   = "#444444"
+        HEADER_BG_2   = "#303030"
+        HEADER_FG     = "#FFFFFF"
 
-        __ENTRY_BG_1    = ""
-        __ENTRY_BG_2    = ""
-        __ENTRY_FG      = "#FFFFFF"
+        ENTRY_BG_1    = "#303030"
+        ENTRY_BG_2    = "#303030"
+        ENTRY_FG      = "#FFFFFF"
 
-        __SEARCH_LABEL  = ""
-        __SEARCH_ICON   = ''
+        SEARCH_LABEL  = "Search"
+        SEARCH_ICON   = ''
 
-        __SBOX_HINT     = ""
-        __SBOX_ICON     = ''
+        SBOX_HINT     = "Directory Location:"
+        SBOX_ICON     = ''
 
 
-        # === Config Dict Reference: ===
-        # -- code ----------------------
-        # {
-        #         # (Optional: Defaults supported)
-        #         "color_scheme"  : {
-        #                 "header_bg_1"   : str(hex),
-        #                 "header_bg_2"   : str(hex),
-        #                 "header_fg"     : str(hex),
-        #
-        #                 "entry_bg_1"    : str(hex),
-        #                 "entry_bg_2"    : str(hex),
-        #                 "entry_fg"      : str(hex),
-        #         },
-        #         "search_icon"   : char
-        #         "search_label"  : str | char,
-        #
-        #         # (Non=Optional: Value of None in any will throw a non-crashing error)
-        #         "header"        : "",
-        #         "entries"       : vec_T_str
-        # }
-        def __init__(self, in_cfg: dict):
-                # Todo: insert default values
-                self.__HEADER_BG_1      = in_cfg["color_scheme"]["header_bg_1"] if \
-                        in_cfg["color_scheme"]["header_bg_1"]   != "" else "Default"
-                self.__HEADER_BG_2      = in_cfg["color_scheme"]["header_bg_2"] if \
-                        in_cfg["color_scheme"]["header_bg_2"]   != "" else "Default"
-                self.__HEADER_FG        = in_cfg["color_scheme"]["header_fg"] if \
-                        in_cfg["color_scheme"]["header_fg"]     != "" else "Default"
+        def resolve(this, config: dict):
+                def __nullish(value, default):
+                        if      (value is None) or \
+                                (value == "") or \
+                                (value == '') or \
+                                (value == ()):
+                                return default
+                        else:
+                                return value
 
-                self.__ENTRY_BG_1       = in_cfg["color_scheme"]["entry_bg_1"] if \
-                        in_cfg["color_scheme"]["entry_bg_1"]    != "" else "Default"
-                self.__ENTRY_BG_2       = in_cfg["color_scheme"]["entry_bg_2"] if \
-                        in_cfg["color_scheme"]["entry_bg_2"]    != "" else "Default"
-                self.__ENTRY_FG         = in_cfg["color_scheme"]["entry_fg"] if \
-                        in_cfg["color_scheme"]["entry_fg"]      != "" else "Default"
+                def __color(scheme: dict):
+                        for entry in scheme.keys():
+                                match entry:
+                                        case 'header_bg1':
+                                                __nullish(scheme['header_bg1'],
+                                                          ExplorerConfig.HEADER_BG_1)
+                                        case 'header_bg2':
+                                                __nullish(scheme['header_bg2'],
+                                                          ExplorerConfig.HEADER_BG_2)
+                                        case 'header_fg':
+                                                __nullish(scheme['header_fg'],
+                                                          ExplorerConfig.HEADER_FG)
+                                        case 'entry_bg1':
+                                                __nullish(scheme['entry_bg1'],
+                                                          ExplorerConfig.ENTRY_BG_1)
+                                        case 'entry_bg2':
+                                                __nullish(scheme['entry_bg2'],
+                                                          ExplorerConfig.ENTRY_BG_2)
+                                        case 'entry_fg':
+                                                __nullish(scheme['entry_fg'],
+                                                          ExplorerConfig.ENTRY_FG)
 
+                for key in config.keys():
+                        match key:
+                                case 'color_scheme':
+                                        __color(config)
+
+                                case 's_label':
+                                        this.SEARCH_LABEL = (
+                                                __nullish(config['s_label'],
+                                                ExplorerConfig.SEARCH_LABEL)
+                                        )
+
+                                case 's_icon':
+                                        this.SEARCH_ICON = (
+                                                __nullish(config['s_icon'],
+                                                ExplorerConfig.SEARCH_ICON)
+                                        )
+
+                                case 'sbox_label':
+                                        this.SBOX_HINT = (
+                                                __nullish(config['sbox_hint'],
+                                                ExplorerConfig.SBOX_HINT)
+                                        )
+
+                                case 'sbox_icon':
+                                        this.SBOX_ICON = (
+                                                __nullish(config['sbox_icon'],
+                                                ExplorerConfig.SBOX_ICON)
+                                        )
+
+        def parse_cfg(this, config: dict = None):
+                this.resolve(config)
+
+        def __init__(this, in_cfg: dict):
+                this.parse_cfg(in_cfg)
 
 class Explorer(Widget):
         """
