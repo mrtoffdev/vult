@@ -89,7 +89,7 @@ class ExplorerConfig:
                 for key in config.keys():
                         match key:
                                 case 'color_scheme':
-                                        __color(config)
+                                        __color(config['color_scheme'])
 
                                 case 's_label':
                                         this.SEARCH_LABEL = (
