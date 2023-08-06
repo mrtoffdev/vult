@@ -34,17 +34,18 @@ class ExpFilter(DirectoryTree):
                 return [path for path in paths if not path.name.startswith(".")]
 
 class ExplorerConfig:
-        # Structure
-        # COLUMNS       = None
+        # Dependencies:
+        # - InputForm.py
+        # - Table.py
 
         # Alternating Color Scheme
-        HEADER_BG_1   = "#444444"
-        HEADER_BG_2   = "#303030"
-        HEADER_FG     = "#FFFFFF"
+        HEADER_BG_1   = TableHeader.HEADER_BG_1
+        HEADER_BG_2   = TableHeader.HEADER_BG_2
+        HEADER_FG     = TableHeader.HEADER_FG
 
-        ENTRY_BG_1    = "#303030"
-        ENTRY_BG_2    = "#303030"
-        ENTRY_FG      = "#FFFFFF"
+        ENTRY_BG_1    = TableEntry.ENTRY_BG_1
+        ENTRY_BG_2    = TableEntry.ENTRY_BG_2
+        ENTRY_FG      = TableEntry.ENTRY_FG
 
         SEARCH_LABEL  = "Search"
         SEARCH_ICON   = ''
