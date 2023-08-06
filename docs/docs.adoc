@@ -1,0 +1,97 @@
+== Vult: CLI Compression Utility
+:stylesheet: docs.css
+
+{nbsp}
+
+=== Explorer: ExplorerConfig
+*Properties:*
+
+* `HEADER_BG_1`:
++
+[source, indent=0]
+----
+default : TableHeader.HEADER_BG_1
+type    : str(RGB: hex)
+
+description:
+
+    First color in the Table Widget's alternating
+    color scheme
+----
+{nbsp}
+
+* `HEADER_BG_2`:
++
+[source, indent=0]
+----
+default : TableHeader.HEADER_BG_2
+type    : str(RGB: hex)
+
+description:
+
+    Second color in the Table Widget's alternating
+    color scheme
+----
+{nbsp}
+
+* `HEADER_FG`:
++
+[source, indent=0]
+----
+default : TableHeader.HEADER_FG
+type    : str(RGB: hex)
+
+description:
+
+    Foreground color. Used by the text inside both
+    the Table Header and Table Entries
+----
+{nbsp}
+
+{nbsp}
+
+* `ENTRY_BG_1`:
++
+[source, indent=0]
+----
+default : TableEntry.ENTRY_BG_1
+type    : str(RGB: hex)
+
+description:
+
+    First color in the Table Widget's alternating
+    color scheme
+----
+{nbsp}
+
+* `ENTRY_BG_2`:
++
+[source, indent=0]
+----
+default : TableEntry.ENTRY_BG_2
+type    : str(RGB: hex)
+
+description:
+
+    First color in the Table Widget's alternating
+    color scheme
+----
+{nbsp}
+
+* `ENTRY_FG`:
++
+[source, indent=0]
+----
+default : TableEntry.ENTRY_FG
+type    : str(RGB: hex)
+
+description:
+
+    First color in the Table Widget's alternating
+    color scheme
+----
+{nbsp}
+
+{nbsp}
+
+
