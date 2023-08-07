@@ -9,24 +9,36 @@
 ----
 [Colors]
 
+# Table
 HEADER_BG_1 : str(RGB: hex)
 HEADER_BG_2 : str(RGB: hex)
 HEADER_FG   : str(RGB: hex)
+
 ENTRY_BG_1  : str(RGB: hex)
 ENTRY_BG_2  : str(RGB: hex)
 ENTRY_FG    : str<RGB: hex>
 
-
-[InputForm Values]
-
-SBUTTON_SET : tuple<char, str>
-SFIELD_SET  : tuple<char, str>
+# InputForm
+FIELD_BG    : str<RGB: hex>
+FIELD_FG    : str<RGB: hex>
 
 
-[Table Values]
+[Layout]
 
-TABLE_HEADER    : tuple<str, str>
-ENTRY_ICON_SET  : typle<str, str>
+# Table
+TB_TITLE    : str
+TB_HEADER   : tuple<str, str>
+
+# InputForm
+SF_TITLE    : str
+SF_BTN_SET  : tuple<char, str>
+SF_FLD_SET  : tuple<char, str>
+
+
+[State]
+
+TB_ENTRIES  : vec_T_str
+SF_VALUE    : str
 ----
 
 {nbsp}
@@ -131,18 +143,56 @@ description:
 *Properties:*
 [source, indent=0]
 ----
-[InputForm]
+[Color]
 
-HEADER      : str(RGB: hex)
 FIELD_BG    : str<RGB: hex>
 FIELD_FG    : str<RGB: hex>
+
+
+[Layout]
+
+TITLE       : str
+SBUTTON_SET : tuple<char, str>
+SFIELD_SET  : tuple<char, str>
+
+
+[State]
 
 VALUE       : str(RGB: hex)
 
 
-[InputForm Values]
 
-SBUTTON_SET : tuple<char, str>
-SFIELD_SET  : tuple<char, str>
+----
+
+{nbsp}
+
+'''
+
+{nbsp}
+
+=== Table: TableConfig
+*Properties:*
+[source, indent=0]
+----
+[Color]
+
+HEADER_BG_1 : str<RGB: hex>
+HEADER_BG_2 : str<RGB: hex>
+HEADER_FG   : str<RGB: hex>
+
+ENTRY_BG_1  : str<RGB: hex>
+ENTRY_BG_2  : str<RGB: hex>
+ENTRY_FG    : str<RGB: hex>
+
+
+[Layout]
+
+TITLE       : str
+HEADER      : tuple<str, str>
+
+
+[State]
+
+ENTRIES     : str(RGB: hex)
 
 ----
