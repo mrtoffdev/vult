@@ -5,7 +5,35 @@
 
 === Explorer: ExplorerConfig
 *Properties:*
+[source, indent=0]
+----
+[Colors]
 
+HEADER_BG_1 : str(RGB: hex)
+HEADER_BG_2 : str(RGB: hex)
+HEADER_FG   : str(RGB: hex)
+ENTRY_BG_1  : str(RGB: hex)
+ENTRY_BG_2  : str(RGB: hex)
+ENTRY_FG    : str<RGB: hex>
+
+
+[InputForm Values]
+
+SBUTTON_SET : tuple<char, str>
+SFIELD_SET  : tuple<char, str>
+
+
+[Table Values]
+
+TABLE_HEADER    : tuple<str, str>
+ENTRY_ICON_SET  : typle<str, str>
+----
+
+{nbsp}
+
+.Expanded Definitions
+[%collapsible]
+====
 * `HEADER_BG_1`:
 +
 [source, indent=0]
@@ -91,7 +119,30 @@ description:
     color scheme
 ----
 {nbsp}
+====
+{nbsp}
+
+'''
 
 {nbsp}
 
 
+=== InputForm: IInputForm
+*Properties:*
+[source, indent=0]
+----
+[InputForm]
+
+HEADER      : str(RGB: hex)
+FIELD_BG    : str<RGB: hex>
+FIELD_FG    : str<RGB: hex>
+
+VALUE       : str(RGB: hex)
+
+
+[InputForm Values]
+
+SBUTTON_SET : tuple<char, str>
+SFIELD_SET  : tuple<char, str>
+
+----
