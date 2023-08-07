@@ -38,20 +38,26 @@ class ExplorerConfig:
         # - InputForm.py
         # - Table.py
 
+
         # Alternating Color Scheme
-        HEADER_BG_1   = TableHeader.HEADER_BG_1
-        HEADER_BG_2   = TableHeader.HEADER_BG_2
-        HEADER_FG     = TableHeader.HEADER_FG
+        HEADER_BG_1     = TableHeader.HEADER_BG_1
+        HEADER_BG_2     = TableHeader.HEADER_BG_2
+        HEADER_FG       = TableHeader.HEADER_FG
 
-        ENTRY_BG_1    = TableEntry.ENTRY_BG_1
-        ENTRY_BG_2    = TableEntry.ENTRY_BG_2
-        ENTRY_FG      = TableEntry.ENTRY_FG
+        ENTRY_BG_1      = TableEntry.ENTRY_BG_1
+        ENTRY_BG_2      = TableEntry.ENTRY_BG_2
+        ENTRY_FG        = TableEntry.ENTRY_FG
 
-        SEARCH_LABEL  = "Search"
-        SEARCH_ICON   = ''
 
-        SBOX_HINT     = "Directory Location:"
-        SBOX_ICON     = ''
+        # ----- Widget Exclusive -----
+
+        # InputForm
+        SBUTTON_SET     = ['', "Search"]
+        SFIELD_SET      = ['', "Directory Location:"]
+
+        # Table
+        TABLE_HEADER    = ["File Name", "Size"]
+        ENTRY_ICON_SET  = ['', '']
 
 
         def resolve(this, config: dict):
@@ -88,32 +94,38 @@ class ExplorerConfig:
 
                 for key in config.keys():
                         match key:
+                                # Color
                                 case 'color_scheme':
                                         __color(config['color_scheme'])
 
-                                case 's_label':
-                                        this.SEARCH_LABEL = (
-                                                __nullish(config['s_label'],
-                                                ExplorerConfig.SEARCH_LABEL)
-                                        )
-
+                                # InputForm Button
                                 case 's_icon':
-                                        this.SEARCH_ICON = (
+                                        this.SBUTTON_SET[0] = (
                                                 __nullish(config['s_icon'],
-                                                ExplorerConfig.SEARCH_ICON)
+                                                          ExplorerConfig.SBUTTON_SET[0])
+                                        )
+                                case 's_label':
+                                        this.SBUTTON_SET[1] = (
+                                                __nullish(config['s_label'],
+                                                ExplorerConfig.SBUTTON_SET[1])
                                         )
 
-                                case 'sbox_label':
-                                        this.SBOX_HINT = (
-                                                __nullish(config['sbox_hint'],
-                                                ExplorerConfig.SBOX_HINT)
-                                        )
-
+                                # InputForm Field
                                 case 'sbox_icon':
-                                        this.SBOX_ICON = (
+                                        this.SFIELD_SET[0] = (
                                                 __nullish(config['sbox_icon'],
-                                                ExplorerConfig.SBOX_ICON)
+                                                ExplorerConfig.SFIELD_SET[0])
                                         )
+
+                                case 'sbox_hint':
+                                        this.SFIELD_SET[1] = (
+                                                __nullish(config['sbox_hint'],
+                                                ExplorerConfig.SFIELD_SET[1])
+                                        )
+
+                                # Table
+                                case 'table_header':
+                                        pass
 
         def parse_cfg(this, config: dict = None):
                 this.resolve(config)
