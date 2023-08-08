@@ -106,6 +106,7 @@ TableConfig     = tuple[T_str, vec_T_str] | dict | None
 class Table(Widget):
 
         # State
+        TITLE           = ""
         HEADER          = reactive(("", ""))
         ENTRIES         = reactive([("", "")])
 

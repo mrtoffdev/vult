@@ -52,12 +52,15 @@ class ExplorerConfig:
         # ----- Widget Exclusive -----
 
         # InputForm
-        SBUTTON_SET     = ['', "Search"]
-        SFIELD_SET      = ['', "Directory Location:"]
+        SF_TITLE        = "Video Sources Directory:"
+        SF_BTN_SET      = ["Search", '']
+        SF_FLD_SET      = ["Directory Location:", '']
 
         # Table
-        TABLE_HEADER    = ["File Name", "Size"]
-        ENTRY_ICON_SET  = ['', '']
+        TB_TITLE        = ""
+        TB_HEADER       = ["File Name", "Size"]
+        TB_ICON_SET     = ['', '']
+
 
 
         def resolve(this, config: dict):

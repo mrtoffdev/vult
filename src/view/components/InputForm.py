@@ -6,11 +6,14 @@ from util.dev_utils import log
 
 
 class IInputForm:
-        # Default Configuration
-        HEADER          = Static("")
-        SEARCH_ICON     = ''
-        HINT            = "Search Directory Here"
-        HINT_ICON       = ''
+        # Oolor
+        FIELD_BG        = ""
+        FIELD_FG        = ""
+
+        # Layout
+        TITLE           = Static("")
+        SBUTTON_SET     = ['', "Search"]
+        SFIELD_SET      = ['', "Source(s) Directory"]
 
         # State
         SEARCH_VALUE    = ""
