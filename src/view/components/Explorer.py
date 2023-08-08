@@ -148,65 +148,76 @@ class Explorer(Widget):
         this collaborative function rather than having to create interfaces for each
         sub-widget manually in order to create the same effect
         """
-        # Tree State
-        TABLE_HEADER    = Static("Explorer Table Header Err")
-        TABLE_ENTRIES  = reactive([])
+
+        DEFAULT_LAYOUT  = Vertical(
+                InputForm(config={
+                        "header"        : "Widget Header 1",
+                        "hint"          : "Directory Search",
+                        # "s_icon"        : '',
+                        # "h_icon"        : ''
+                })
+        )
+
+        CONFIG          = ExplorerLayout
+
+        # State
+        SW_TITLE        = reactive(str(""))     # Search Widget Header
+        TW_TITLE        = reactive(str(""))     # Table Widget Header
+
+        TABLE_HEADER    = reactive(("File Name", "Size"))
+        TABLE_ENTRIES   = reactive([])
 
         # Widget Layouts
-        SEARCH_LAYOUT   = Static("Explorer Search Layout Err")
-        TABLE_LAYOUT    = Static("Explorer Table Layout Err")
+        SEARCH_LAYOUT   = Static()
+        TABLE_LAYOUT    = Static()
 
-        LAYOUT          = Static("Explorer Root Layout err")
+        LAYOUT          = reactive(Static())
 
         # ===== DOM Operations =====
 
-        def __init__(self, header: T_str, entries: vec_T_str, *children: Widget):
-                super().__init__(*children)
-                self.TABLE_HEADER       = TableHeader(header)
-                self.TABLE_ENTRIES     = Table(entries)
-                self.LAYOUT = Vertical(
-                        self.TABLE_HEADER,
-                        self.TABLE_LAYOUT,
-                        *children,
+        def __init__(this,
+                     config: ExplorerLayout | dict | None = None,
+                     classes=None,
+                     id=None
+                     ):
+                super().__init__()
+
+                this.classes    = classes if classes is not None else this.classes
+                this.id         = id if id is not None else this.id
+                this.parse_cfg(config)
+
+        def parse_cfg(this, config: ExplorerLayout | dict):
+                if type(config) is dict:
+                        this.CONFIG = ExplorerLayout(config)
+                else:
+                        this.CONFIG = config
+
+                this.__build_component()
+
+        def __build_component(this):
+                # Build Header
+                this.LAYOUT     = Vertical(
+                        InputForm(),
+                        VerticalScroll(classes="w-fill h-fill-p dbg-2 table-fixed")
                 )
+
+                # log("log", f"entries: {str(entries)}")
+                # Build Table
+                for entry in this.TABLE_ENTRIES:
+                        if entry != ("", ""):
+                                entry = TableEntry(entry)
+                                this.TABLE_LAYOUT.mount(entry)
+
+        # = State Mgmt ==============================================================
 
         def bind_entries(self, entries):
                 self.TABLE_ENTRIES = entries
 
-        def build(self) -> None:
-                self.LAYOUT = Vertical(
-                        self.SEARCH_LAYOUT,
-                        self.TABLE_LAYOUT
-                )
-
-        # Render Blank Table
-        def __build_component(self, header: T_str, entries: vec_T_str):
-                # Build Header
-                TEMP_HEADER = Static()
-                if header != ("", ""):
-                        TEMP_HEADER = TableHeader()
-                        TEMP_HEADER.set_header(header)  # Set Default Header
-                        TEMP_HEADER.classes = "w-fill"
-
-                # Set init layout
-                self.TABLE_HEADER = TEMP_HEADER
-                self.TABLE_LAYOUT = VerticalScroll(classes="w-fill h-fill-p dbg-2")
-                self.TABLE_LAYOUT.classes="table-fixed"
-
-                log("log", f"entries: {str(entries)}")
-                # Build Table
-                for entry in entries:
-                        if entry != ("", ""):
-                                ENTRY = TableEntry(entry)
-                                self.TABLE_LAYOUT.mount(ENTRY)
-
-        def compose(self) -> ComposeResult:
-                yield self.TABLE_HEADER
-                yield self.TABLE_LAYOUT
-
-        # State Mgmt
         def insert_entries(self, entries: tuple[type[str], type[str]]):
                 self.TABLE_ENTRIES = entries
 
         def remove_entry(self, id: str):
                 self.query_one('#' + id).remove()
+
+        def compose(self) -> ComposeResult:
+                yield self.LAYOUT
