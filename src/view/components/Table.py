@@ -5,10 +5,13 @@ from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
 from core.typedef import T_str, vec_T_str
-from util.dev_utils import log
 
 class TableEntry(Static):
         # Default Configuration
+        ENTRY_BG_1    = "#303030"
+        ENTRY_BG_2    = "#303030"
+        ENTRY_FG      = "#FFFFFF"
+
         ICON_1          = "   "
         ICON_2          = ""
 
@@ -63,6 +66,11 @@ class TableEntry(Static):
                 self.__build_component(entry)
 
 class TableHeader(Static):
+        # DOM
+        HEADER_BG_1     = "#444444"
+        HEADER_BG_2     = "#303030"
+        HEADER_FG       = "#FFFFFF"
+
         # Header State
         ICON_1          = "[] "
         ICON_2          = "[] "
@@ -117,7 +125,7 @@ class Table(Widget):
         HEADER_LAYOUT   = Static()
         TABLE_LAYOUT    = Static()
 
-        LAYOUT          = reactive(Static())
+        LAYOUT          = reactive(Static("TablWidget.LAYOUT err"))
 
         def __init__(self, config: TableConfig, *children: Widget):
                 self.parse_cfg(config)
