@@ -16,45 +16,14 @@ class IInputForm:
         SFIELD_SET      = ['', "Source(s) Directory"]
 
         # State
-        SEARCH_VALUE    = ""
+        VALUE           = None
 
         # DOM
         ID              = None
         CSS_PATH        = None
 
-        @staticmethod
-        def default():
-                pass
-        def __init__(self, config: dict) -> None:
-                self.HEADER             = config["header"]
-                self.SEARCH_ICON        = config["s_icon"]
-                self.HINT               = config["hint"]
-                self.HINT_ICON          = config["h_icon"]
-
-class InputForm(Static):
-        
-        CSS_PATH        = None
-        CONFIG          = IInputForm(config={
-                "header": "[] Default Header:",
-                "s_icon": '',
-                "hint"  : "[] Default Hint:",
-                "h_icon": ''
-        })
-
-        # Optional
-        HEADER          = ""
-        HINT            = ""
-
-        LAYOUT          = Static("FSearchWidget.LAYOUT err")
-
-        def __init__(self, config=CONFIG, id=None):
-                self.parse_cfg(config)
-                super().__init__(id=id)
-
-        # Helper for resolving config values & defaulting when null
-        @staticmethod
-        def __resolve(key: str, config: dict | IInputForm):
-                def __nullish(value, default) :
+        def __resolve(this, config: dict):
+                def __nullish(value, default):
                         if      (value is None) or \
                                 (value == "") or \
                                 (value == '') or \
@@ -63,18 +32,49 @@ class InputForm(Static):
                         else:
                                 return value
 
-                match key:
-                        case 'header' if 'header' in config.keys():
-                                return __nullish(config['header'],
-                                                InputForm.CONFIG.HEADER)
+                for key in config.keys():
+                        match key:
+                                # Color
+                                case 'fbg':
+                                        this.FIELD_BG           = __nullish(config[key],
+                                                                IInputForm.FIELD_BG)
+                                case 'ffg':
+                                        this.FIELD_FG           = __nullish(config[key],
+                                                                IInputForm.FIELD_FG)
+                                case 'title':
+                                        this.TITLE              = __nullish(config[key],
+                                                                IInputForm.TITLE)
 
-                        case 's_icon' if 's_icon' in config.keys():
-                                return __nullish(config['s_icon'],
-                                                InputForm.CONFIG.SEARCH_ICON)
+                                # Submit Button
+                                case 'sb-set':
+                                        this.SBUTTON_SET        = __nullish(config[key],
+                                                                IInputForm.SBUTTON_SET)
+                                case 'sb-label':
+                                        this.SBUTTON_SET[0]     = __nullish(config[key],
+                                                                IInputForm.SBUTTON_SET[0])
+                                case 'sb-icon':
+                                        this.SBUTTON_SET[1]     = __nullish(config[key],
+                                                                IInputForm.SBUTTON_SET[1])
 
-                        case 'hint' if 'hint' in config.keys():
-                                return __nullish(config['hint'],
-                                                InputForm.CONFIG.HINT)
+                                # Input Field
+                                case 'sf-set':
+                                        this.SFIELD_SET         = __nullish(config[key],
+                                                                IInputForm.SFIELD_SET)
+                                case 'sf-label':
+                                        this.SFIELD_SET[0]      = __nullish(config[key],
+                                                                IInputForm.SFIELD_SET[0])
+                                case 'sf-icon':
+                                        this.SFIELD_SET[1]      = __nullish(config[key],
+                                                                IInputForm.SFIELD_SET[1])
+
+        def parse_cfg(this, config):
+                this.__resolve(config)
+        def __init__(this, config: dict) -> None:
+                this.parse_cfg(config)
+                # self.HEADER             = config["header"]
+                # self.SEARCH_ICON        = config["s_icon"]
+                # self.HINT               = config["hint"]
+                # self.HINT_ICON          = config["h_icon"]
 
                         case 'h_icon' if 'h_icon' in config.keys():
                                 return __nullish(config['h_icon'],
@@ -85,28 +85,14 @@ class InputForm(Static):
 
                 # Dict initialization
                 if type(config) == dict:
-                        this.CONFIG.HEADER      = this.__resolve('header',
-                                                                config=config)
-                        this.CONFIG.HINT        = this.__resolve(key='hint',
-                                                                config=config)
-                        this.CONFIG.SEARCH_ICON = this.__resolve(key='s_icon',
-                                                                config=config)
-                        this.CONFIG.HINT_ICON   = this.__resolve(key='h_icon',
-                                                                config=config)
+                        this.CONFIG = IInputForm(config)
 
                 # Config initialization
                 elif type(config) == IInputForm:
 
-                        this.LAYOUT = Vertical(
-                                Static("Video Sources Directory:", classes="dialogue-header-top"),
-                                Horizontal(
-                                        Input(placeholder=config.HINT, id="Search-field"),
-                                        Button(f"[{config.SEARCH_ICON}] Search", id="Search-button"),
-
-                                        id="Search-widget"
-                                ),
-                                classes="h-auto-w-fill"
-                        )
+        def __init__(self, config=CONFIG, id=None):
+                self.parse_cfg(config)
+                super().__init__(id=id)
 
 
         def __build_component(this):
