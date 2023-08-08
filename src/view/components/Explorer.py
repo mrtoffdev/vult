@@ -7,9 +7,7 @@ from textual.containers import VerticalScroll, Vertical
 from pathlib import Path
 from typing import Iterable
 
-from core.typedef import T_str, vec_T_str
 from .InputForm import InputForm
-from util.dev_utils import log
 
 from .Table import TableHeader, TableEntry
 
@@ -33,7 +31,7 @@ class ExpFilter(DirectoryTree):
         def filter_paths(self, paths: Iterable[Path]) -> Iterable[Path]:
                 return [path for path in paths if not path.name.startswith(".")]
 
-class ExplorerConfig:
+class ExplorerLayout:
         # Dependencies:
         # - InputForm.py
         # - Table.py
@@ -76,24 +74,24 @@ class ExplorerConfig:
                 def __color(scheme: dict):
                         for entry in scheme.keys():
                                 match entry:
-                                        case 'header_bg1':
+                                        case 'hbg-1':
                                                 __nullish(scheme['header_bg1'],
-                                                          ExplorerConfig.HEADER_BG_1)
-                                        case 'header_bg2':
+                                                          ExplorerLayout.HEADER_BG_1)
+                                        case 'hbg-2':
                                                 __nullish(scheme['header_bg2'],
-                                                          ExplorerConfig.HEADER_BG_2)
-                                        case 'header_fg':
+                                                          ExplorerLayout.HEADER_BG_2)
+                                        case 'hfg':
                                                 __nullish(scheme['header_fg'],
-                                                          ExplorerConfig.HEADER_FG)
-                                        case 'entry_bg1':
+                                                          ExplorerLayout.HEADER_FG)
+                                        case 'ebg-1':
                                                 __nullish(scheme['entry_bg1'],
-                                                          ExplorerConfig.ENTRY_BG_1)
-                                        case 'entry_bg2':
+                                                          ExplorerLayout.ENTRY_BG_1)
+                                        case 'ebg-2':
                                                 __nullish(scheme['entry_bg2'],
-                                                          ExplorerConfig.ENTRY_BG_2)
-                                        case 'entry_fg':
+                                                          ExplorerLayout.ENTRY_BG_2)
+                                        case 'efg':
                                                 __nullish(scheme['entry_fg'],
-                                                          ExplorerConfig.ENTRY_FG)
+                                                          ExplorerLayout.ENTRY_FG)
 
                 for key in config.keys():
                         match key:
@@ -101,29 +99,47 @@ class ExplorerConfig:
                                 case 'color_scheme':
                                         __color(config['color_scheme'])
 
-                                # InputForm Button
-                                case 's_icon':
-                                        this.SBUTTON_SET[0] = (
-                                                __nullish(config['s_icon'],
-                                                          ExplorerConfig.SBUTTON_SET[0])
-                                        )
-                                case 's_label':
-                                        this.SBUTTON_SET[1] = (
-                                                __nullish(config['s_label'],
-                                                ExplorerConfig.SBUTTON_SET[1])
+                                # InputForm Button -----
+
+                                # Define as pair
+                                case 'sfb_set':
+                                        this.SF_BTN_SET = (
+                                                __nullish(config['sfb_set'],
+                                                          ExplorerLayout.SF_BTN_SET)
                                         )
 
-                                # InputForm Field
+                                # Define individually
+                                case 's_icon':
+                                        this.SF_BTN_SET[0] = (
+                                                __nullish(config['s_icon'],
+                                                          ExplorerLayout.SF_BTN_SET[0])
+                                        )
+                                case 's_label':
+                                        this.SF_BTN_SET[1] = (
+                                                __nullish(config['s_label'],
+                                                          ExplorerLayout.SF_BTN_SET[1])
+                                        )
+
+                                # InputForm Field -----
+
+                                # Define as pair
+                                case 'sff_set':
+                                        this.SF_FLD_SET = (
+                                                __nullish(config['sff_set'],
+                                                          ExplorerLayout.SF_FLD_SET)
+                                        )
+
+                                # Define individually
                                 case 'sbox_icon':
-                                        this.SFIELD_SET[0] = (
+                                        this.SF_FLD_SET[0] = (
                                                 __nullish(config['sbox_icon'],
-                                                ExplorerConfig.SFIELD_SET[0])
+                                                          ExplorerLayout.SF_FLD_SET[0])
                                         )
 
                                 case 'sbox_hint':
-                                        this.SFIELD_SET[1] = (
+                                        this.SF_FLD_SET[1] = (
                                                 __nullish(config['sbox_hint'],
-                                                ExplorerConfig.SFIELD_SET[1])
+                                                          ExplorerLayout.SF_FLD_SET[1])
                                         )
 
                                 # Table
@@ -137,6 +153,7 @@ class ExplorerConfig:
                 this.parse_cfg(in_cfg)
 
 class Explorer(Widget):
+
         """
         # Explorer Widget
         An explorer widget is, by default, composed of two widgets that work together:
