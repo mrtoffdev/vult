@@ -1,7 +1,6 @@
 from textual.widgets import Static, Input, Button
 from textual.containers import Horizontal, Vertical
 
-from core.typedef import vec_T_str
 from util.dev_utils import log
 
 
@@ -76,9 +75,17 @@ class IInputForm:
                 # self.HINT               = config["hint"]
                 # self.HINT_ICON          = config["h_icon"]
 
-                        case 'h_icon' if 'h_icon' in config.keys():
-                                return __nullish(config['h_icon'],
-                                                InputForm.CONFIG.HINT_ICON)
+class InputForm(Static):
+        
+        CSS_PATH        = None
+        CONFIG          = IInputForm(config={
+                "header": "[] Default Header:",
+                "s_icon": '',
+                "hint"  : "[] Default Hint:",
+                "h_icon": ''
+        })
+
+        LAYOUT          = Static("FSearchWidget.LAYOUT err")
 
         def parse_cfg(this, config: dict | IInputForm):
                 log("log", f"__parse rcvd: {str(config)}")
@@ -89,6 +96,7 @@ class IInputForm:
 
                 # Config initialization
                 elif type(config) == IInputForm:
+                        this.CONFIG = config
 
         def __init__(self, config=CONFIG, id=None):
                 self.parse_cfg(config)
@@ -99,15 +107,17 @@ class IInputForm:
                 log("log", f"IForm __build()")
                 this.LAYOUT = Vertical(
                         # Widget Header
-                        Static(f"{this.CONFIG.HEADER}:",
+                        Static(f"{this.CONFIG.TITLE}:",
                                classes="dialogue-header-top"),
 
                         # Input Form (Box + Button)
                         Horizontal(
-                                Input(placeholder=f"[{this.CONFIG.HINT_ICON}"
-                                                  f"]{this.CONFIG.HEADER}",
+                                Input(placeholder=f"[{this.CONFIG.SFIELD_SET[1]}"
+                                                  f"]{this.CONFIG.SFIELD_SET[0]}",
                                         id="Search-field"),
-                                Button(f"[{this.CONFIG.SEARCH_ICON}] Search",
+
+                                Button(f"[{this.CONFIG.SBUTTON_SET[1]}] "
+                                       f"{this.CONFIG.SBUTTON_SET[0]}",
                                         id="Search-button"),
 
                                 id="Search-widget"
@@ -115,21 +125,6 @@ class IInputForm:
                         classes="h-auto-w-fill"
 
                 )
-                # if self.CONFIG != None:
-                #         log("log", f"IForm __build(): has config: "
-                #                    f"XX")
-                #         self.LAYOUT = Horizontal(
-                #                 Input(placeholder="", id="Search-field"),
-                #                 Button("[] Search", id="Search-button"),
-                #
-                #                 classes="w-fill",
-                #                 id="Search-widget"
-                #         )
-                # else:
-                #         log("log", f"IForm __build(): no config")
-                #         # Todo: Fix bug where defaults are not initialized
-                #         # Todo: Defaults system
-                #         self.LAYOUT = InputForm.__parse_cfg(InputForm.CONFIG)
 
         def compose(self):
                 yield self.LAYOUT
