@@ -10,29 +10,30 @@
 [Colors]
 
 # Table
-HEADER_BG_1 : str(RGB: hex)
-HEADER_BG_2 : str(RGB: hex)
-HEADER_FG   : str(RGB: hex)
+HEADER_BG_1 : str(RGB: hex) | 'hbg-1'
+HEADER_BG_2 : str(RGB: hex) | 'hbg-2'
+HEADER_FG   : str(RGB: hex) | 'hfg'
 
-ENTRY_BG_1  : str(RGB: hex)
-ENTRY_BG_2  : str(RGB: hex)
-ENTRY_FG    : str<RGB: hex>
+ENTRY_BG_1  : str(RGB: hex) | 'ebg-1'
+ENTRY_BG_2  : str(RGB: hex) | 'ebg-2'
+ENTRY_FG    : str<RGB: hex> | 'efg'
 
 # InputForm
-FIELD_BG    : str<RGB: hex>
-FIELD_FG    : str<RGB: hex>
+FIELD_BG    : str<RGB: hex> | 'fbg'
+FIELD_FG    : str<RGB: hex> | 'ffg'
 
 
 [Layout]
 
+# InputForm
+SF_TITLE    : str
+SF_BTN_SET  : tuple<str, char>
+SF_FLD_SET  : tuple<str, char>
+
 # Table
 TB_TITLE    : str
 TB_HEADER   : tuple<str, str>
-
-# InputForm
-SF_TITLE    : str
-SF_BTN_SET  : tuple<char, str>
-SF_FLD_SET  : tuple<char, str>
+TB_ICON_SET : tuple<char, char>
 
 
 [State]
@@ -137,7 +138,6 @@ description:
 '''
 
 {nbsp}
-
 
 === InputForm: IInputForm
 *Properties:*
