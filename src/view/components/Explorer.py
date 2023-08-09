@@ -195,12 +195,9 @@ class Explorer(Widget):
         def __init__(this,
                      config: ExplorerLayout | dict | None = None,
                      classes=None,
-                     id=None
-                     ):
-                super().__init__()
+                     id=None, *children: Widget):
 
-                this.classes    = classes if classes is not None else this.classes
-                this.id         = id if id is not None else this.id
+                super().__init__(*children, id=id, classes=classes)
                 this.parse_cfg(config)
 
         def parse_cfg(this, config: ExplorerLayout | dict):
