@@ -63,13 +63,11 @@ class ExplorerLayout:
 
         def resolve(this, config: dict):
                 def __nullish(value, default):
-                        if      (value is None) or \
-                                (value == "") or \
-                                (value == '') or \
-                                (value == ()):
-                                return default
-                        else:
-                                return value
+                        match value:
+                                case None | "" | '' | ():
+                                        return default
+                                case _:
+                                        return value
 
                 def __color(scheme: dict):
                         for entry in scheme.keys():

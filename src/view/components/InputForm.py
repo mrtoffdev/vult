@@ -23,13 +23,11 @@ class IInputForm:
 
         def __resolve(this, config: dict):
                 def __nullish(value, default):
-                        if      (value is None) or \
-                                (value == "") or \
-                                (value == '') or \
-                                (value == ()):
-                                return default
-                        else:
-                                return value
+                        match value:
+                                case None | "" | '' | ():
+                                        return default
+                                case _:
+                                        return value
 
                 for key in config.keys():
                         match key:
