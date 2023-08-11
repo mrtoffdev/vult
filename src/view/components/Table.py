@@ -103,6 +103,30 @@ class TableHeader(Static):
 
                         classes="fdir-entry",
                 )
+                for i, header in enumerate(this.HEADER_LABELSET):
+
+                        class_holder    = ""
+
+                        if i == 0:
+                                class_holder = "header-col1 fdir-cell-name"
+                        else:
+                                class_holder = "header-col2 fdir-cell-name"
+
+                        testss = Static(
+                                        f"{[this.HEADER_ICONSET[i]]} "
+                                        f"{this.HEADER_LABELSET[i]}",
+                                        classes=class_holder
+                        )
+
+                        testss.classes = class_holder
+
+                        this.LAYOUT.mount(
+                                testss
+                                # Static(
+                                #         f"{[this.HEADER_ICONSET[i]]}"
+                                #         f" {this.HEADER_LABELSET[i]}",
+                                # )
+                        )
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
