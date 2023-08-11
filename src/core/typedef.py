@@ -5,6 +5,7 @@ from typing import Literal
 # = Types ===========================================================================
 
 b_str           = str | Literal['']
+L_str           = list[str]
 T_str           = tuple[b_str, b_str]
 vec_T_str       = list[T_str]
 
