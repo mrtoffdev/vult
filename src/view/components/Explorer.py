@@ -2,14 +2,14 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.reactive import reactive
 from textual.widgets import DirectoryTree, Static
-from textual.containers import VerticalScroll, Vertical
+from textual.containers import Vertical
 
 from pathlib import Path
 from typing import Iterable
 
 from .InputForm import InputForm
 
-from .Table import TableHeader, TableEntry
+from .Table import TableHeader, TableEntry, Table
 
 '''
         # Explorer Widget
@@ -207,18 +207,20 @@ class Explorer(Widget):
                 this.__build_component()
 
         def __build_component(this):
-                # Build Header
-                this.LAYOUT     = Vertical(
-                        InputForm(),
-                        VerticalScroll(classes="w-fill h-fill-p dbg-2 table-fixed")
-                )
-
                 # log("log", f"entries: {str(entries)}")
                 # Build Table
                 for entry in this.TABLE_ENTRIES:
                         if entry != ("", ""):
                                 entry = TableEntry(entry)
                                 this.TABLE_LAYOUT.mount(entry)
+
+                # Build Header
+                this.LAYOUT     = Vertical(
+                        InputForm(),
+                        Table(),
+                        # this.TABLE_LAYOUT,
+                        # VerticalScroll(classes="w-fill h-fill-p table-fixed")
+                )
 
         # = State Mgmt ==============================================================
 
