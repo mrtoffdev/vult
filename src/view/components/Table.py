@@ -72,8 +72,8 @@ class TableHeader(Static):
         HEADER_FG       = "#FFFFFF"
 
         # Header State
-        ICON_1          = "[] "
-        ICON_2          = "[] "
+        HEADER_ICONSET  = ['', '']
+        HEADER_LABELSET: list = ["File Name:", "Size:"]
 
         DEFAULT         = ("Invalid Header", "NaN")
 
@@ -115,8 +115,10 @@ class Table(Widget):
 
         # State
         TITLE           = ""
-        HEADER          = reactive(("", ""))
-        ENTRIES         = reactive([("", "")])
+        HEADER          = reactive(["File Name:", "Size:"])
+        ENTRIES         = reactive([
+                ["", ""]
+        ])
 
         WIDGET_HEADER   = Static()
         SHOW_HEADER     = False
