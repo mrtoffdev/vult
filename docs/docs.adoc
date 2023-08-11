@@ -152,8 +152,8 @@ FIELD_FG    : str<RGB: hex>
 [Layout]
 
 TITLE       : str
-SBUTTON_SET : tuple<char, str>
-SFIELD_SET  : tuple<char, str>
+SBUTTON_SET : list<char, str>
+SFIELD_SET  : list<char, str>
 
 
 [State]
@@ -174,25 +174,33 @@ VALUE       : str(RGB: hex)
 *Properties:*
 [source, indent=0]
 ----
-[Color]
+[Root Widget]
 
-HEADER_BG_1 : str<RGB: hex>
-HEADER_BG_2 : str<RGB: hex>
-HEADER_FG   : str<RGB: hex>
-
-ENTRY_BG_1  : str<RGB: hex>
-ENTRY_BG_2  : str<RGB: hex>
-ENTRY_FG    : str<RGB: hex>
+TITLE           : str
 
 
-[Layout]
+[Header]
 
-TITLE       : str
-HEADER      : tuple<str, str>
+HEADER_BG_1     : str<RGB: hex>
+HEADER_BG_2     : str<RGB: hex>
+HEADER_FG       : str<RGB: hex>
+
+HEADER_ICONSET  : list<char, ...>
+HEADER_LABELSET : list<str, ...>
+
+
+[Entry]
+
+ENTRY_BG_1      : str<RGB: hex>
+ENTRY_BG_2      : str<RGB: hex>
+ENTRY_FG        : str<RGB: hex>
+
+ENTRY_ICONSET   : list<char, ...>
+ENTRY_LABELSET  : list<str, ...>
 
 
 [State]
 
-ENTRIES     : str(RGB: hex)
+ENTRIES         : str(RGB: hex)
 
 ----
