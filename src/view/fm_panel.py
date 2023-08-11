@@ -24,14 +24,14 @@ class FileChooserDialogue(Static):
                 this.LAYOUT     = Vertical(
                         # Sources Explorer
                         Explorer(
-                                classes="w-fill h-half-p dbg-1",
-                                 id="source-panel"
+                                classes="w-fill h-half-p",
+                                id="source-panel"
                         ),
 
                         # Output Explorer
                         Explorer(
-                                classes="w-fill h-half-p dbg-1",
-                                 id="output-panel"
+                                classes="w-fill h-half-p",
+                                id="output-panel"
                         ),
 
                         classes="pad-s"

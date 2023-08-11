@@ -128,7 +128,7 @@
 
 .table-fixed {
         height: 80h;
-        background: green;
+        /*background: green;*/
 }
 
 /* Encoder Section Props*/
@@ -159,7 +159,7 @@
 .FCD-section {
         width: 100%;
         height: 50%;
-        background: red;
+        /*background: red;*/
 }
 
 .FCD-fs-header {
