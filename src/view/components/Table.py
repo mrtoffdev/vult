@@ -153,28 +153,27 @@ class Table(Widget):
 
         LAYOUT          = reactive(Static("TablWidget.LAYOUT err"))
 
-        def __init__(self, config: TableConfig, *children: Widget):
-                self.parse_cfg(config)
+        def __init__(this,
+                     config: TableConfig | dict | None = None,
+                     *children: Widget):
+
+                this.parse_cfg(config)
                 super().__init__(*children)
 
         def parse_cfg(this, config: TableConfig):
-                match config:
-                        # Tuple initialization
-                        case config if type(config) == tuple[T_str, vec_T_str]:
-                                this.HEADER = config[0] if (config[0] is not "" or
-                                        config[0] is not None) else None
 
-                        # Dict initialization
-                        case config if type(config) == dict:
-                                this.HEADER = config['header'] \
-                                        if (config['header'] is not "" or
-                                            config['header'] is not None) \
-                                        else TableHeader.DEFAULT
+                # Config struct : <Header: T_str, Entries: vec_T_str>
+                T_TableSet = tuple[T_str, vec_T_str]
 
-                                this.ENTRIES = config['entries'] \
-                                        if (config['entries'] is not "" or
-                                            config['entries'] is not None) \
-                                        else None
+                if type(config) is T_TableSet:
+                        if (config[0] != "") or (config[0] is not None):
+                                this.HEADER = config[0]
+
+                elif type(config) is dict:
+                        pass
+
+                elif type(config) is None:
+                        pass
 
                 this.__build_component()
 
