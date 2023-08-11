@@ -10,9 +10,9 @@ class IInputForm:
         FIELD_FG        = ""
 
         # Layout
-        TITLE           = Static("")
-        SBUTTON_SET     = ['', "Search"]
-        SFIELD_SET      = ['', "Source(s) Directory"]
+        TITLE           = "Directory Search"
+        SBUTTON_SET     = ["Search",'']
+        SFIELD_SET      = ["Source(s) Directory",'']
 
         # State
         VALUE           = None
@@ -110,8 +110,8 @@ class InputForm(Static):
 
                         # Input Form (Box + Button)
                         Horizontal(
-                                Input(placeholder=f"[{this.CONFIG.SFIELD_SET[1]}"
-                                                  f"]{this.CONFIG.SFIELD_SET[0]}",
+                                Input(placeholder=f"[{this.CONFIG.SFIELD_SET[1]}] "
+                                                  f"{this.CONFIG.SFIELD_SET[0]}",
                                         id="Search-field"),
 
                                 Button(f"[{this.CONFIG.SBUTTON_SET[1]}] "
