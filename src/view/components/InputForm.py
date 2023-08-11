@@ -89,12 +89,18 @@ class InputForm(Static):
                 log("log", f"__parse rcvd: {str(config)}")
 
                 # Dict initialization
-                if type(config) == dict:
+                if type(config) is dict:
                         this.CONFIG = IInputForm(config)
 
                 # Config initialization
-                elif type(config) == IInputForm:
+                elif type(config) is IInputForm:
                         this.CONFIG = config
+
+                elif type(config) is None:
+                        this.CONFIG = InputForm.CONFIG
+
+                this.__build_component()
+
 
         def __init__(self, config=CONFIG, id=None):
                 self.parse_cfg(config)
