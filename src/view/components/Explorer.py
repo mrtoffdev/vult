@@ -201,8 +201,10 @@ class Explorer(Widget):
         def parse_cfg(this, config: ExplorerLayout | dict):
                 if type(config) is dict:
                         this.CONFIG = ExplorerLayout(config)
-                else:
+                elif type(config) is ExplorerLayout:
                         this.CONFIG = config
+                elif type(config) is None:
+                        this.CONFIG = Explorer.DEFAULT_LAYOUT
 
                 this.__build_component()
 
