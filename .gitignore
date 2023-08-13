@@ -3,7 +3,7 @@
 **/__pycache__/
 **/__pycache__/**
 
-/tests/real_video1.mp4
+/tests/res/real_video1.mp4
 /pyrightconfig.json
 /logfile.txt
 /fs
