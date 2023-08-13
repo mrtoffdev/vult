@@ -96,14 +96,14 @@ class TableHeader(Static):
                         case None:
                                 this.HEADER_ICONSET = TableHeader.HEADER_ICONSET
 
-                self.__build_component(build)
+                this.__build_component()
 
-        def __build_component(self, config: T_str | None):
-                self.LAYOUT = Horizontal(
-                        Static(self.ICON_1 + str(config[0]),
-                               classes="header-col1 fdir-cell-name"),
-                        Static(self.ICON_2 + str(config[1]),
-                               classes="header-col2 fdir-cell-size"),
+        def __build_component(this):
+                this.LAYOUT = Horizontal(
+                        # Static(f"{[this.HEADER_ICONSET[0]]} {this.HEADER_LABELSET[0]}",
+                        #        classes="header-col1 fdir-cell-name"),
+                        # Static(f"{[this.HEADER_ICONSET[1]]} {this.HEADER_LABELSET[1]}",
+                        #        classes="header-col2 fdir-cell-size"),
 
                         classes="fdir-entry",
                 )
@@ -181,21 +181,18 @@ class Table(Widget):
 
                 this.__build_component()
 
-        def __build_component(this, config=None):
-                if config is None:
-                        pass
-                else:
-                        this.HEADER_LAYOUT      = TableHeader(this.HEADER)
-                        this.TABLE_LAYOUT       = Vertical()
+        def __build_component(this):
+                this.HEADER_LAYOUT      = TableHeader(this.HEADER)
+                this.TABLE_LAYOUT       = Vertical()
 
-                        # Dynamically mount entries
-                        for entry in this.ENTRIES:
-                                this.TABLE_LAYOUT.mount(TableEntry(entry=entry))
+                # Dynamically mount entries
+                for entry in this.ENTRIES:
+                        this.TABLE_LAYOUT.mount(TableEntry(entry=entry))
 
-                        this.LAYOUT = Vertical (
-                                this.HEADER_LAYOUT,
-                                this.TABLE_LAYOUT
-                        )
+                this.LAYOUT = Vertical (
+                        this.HEADER_LAYOUT,
+                        this.TABLE_LAYOUT
+                )
 
 
         def compose(self) -> ComposeResult:
