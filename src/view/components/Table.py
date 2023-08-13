@@ -4,7 +4,7 @@ from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
-from core.typedef import T_str, vec_T_str
+from core.typedef import vec_T_str, L_str
 
 class TableEntry(Static):
         # Default Configuration
@@ -22,21 +22,21 @@ class TableEntry(Static):
         ENTRY_ID        = VALUE[0]
         LAYOUT          = reactive(Static())
 
-        def __init__(self, entry: T_str = None):
+        def __init__(self, entry: L_str = None):
                 self.parse_cfg(entry)
                 super().__init__()
 
-        def parse_cfg(self, entry: T_str):
+        def parse_cfg(self, entry: L_str | None = None):
                 build = None
                 match entry:
-                        case entry if type(entry) == T_str:
+                        case entry if type(entry) is L_str:
                                 build = entry
-                        case None:
+                        case None if type(entry) is None:
                                 build = TableEntry.VALUE
 
                 self.__build_component(build)
 
-        def __build_component(this, entry: T_str | None):
+        def __build_component(this, entry: L_str | None):
                 this.LAYOUT = Horizontal(
                         Static(
                                 TableEntry.ICON_1 +
@@ -62,11 +62,11 @@ class TableEntry(Static):
 
         #= State Mgmt ===============================================================
 
-        def set_entry(self, entry: T_str) -> None:
+        def set_entry(self, entry: L_str) -> None:
                 self.__build_component(entry)
 
 class TableHeader(Static):
-        # DOM
+        # Color
         HEADER_BG_1     = "#444444"
         HEADER_BG_2     = "#303030"
         HEADER_FG       = "#FFFFFF"
@@ -75,22 +75,26 @@ class TableHeader(Static):
         HEADER_ICONSET  = ['', '']
         HEADER_LABELSET: list = ["File Name:", "Size:"]
 
-        DEFAULT         = ("Invalid Header", "NaN")
-
-        # Layout Holder
+        # Layout
         LAYOUT          = Static("TableHeader layout err")
 
-        def __init__(self, header: T_str):
-                self.parse_cfg(header)
+        def __init__(self, header: L_str | None):
+                self.parse_cfg(header_set=header)
                 super().__init__()
 
-        def parse_cfg(self, config: T_str):
+        def parse_cfg(this, header_set: L_str, icon_set: L_str = None):
                 build = None
-                match config:
-                        case config if type(config) == T_str:
-                                build = config
+                match header_set:
+                        case header_set if type(header_set) == L_str:
+                                this.HEADER_LABELSET = header_set
                         case None:
-                                build = TableHeader.DEFAULT
+                                this.HEADER_LABELSET = TableHeader.HEADER_LABELSET
+
+                match icon_set:
+                        case icon_set if type(icon_set) == L_str:
+                                this.HEADER_ICONSET = icon_set
+                        case None:
+                                this.HEADER_ICONSET = TableHeader.HEADER_ICONSET
 
                 self.__build_component(build)
 
@@ -133,7 +137,7 @@ class TableHeader(Static):
 
 
 # Typing
-TableConfig     = tuple[T_str, vec_T_str] | dict | None
+TableConfig     = tuple[L_str, vec_T_str] | dict | None
 
 class Table(Widget):
 
@@ -162,8 +166,8 @@ class Table(Widget):
 
         def parse_cfg(this, config: TableConfig):
 
-                # Config struct : <Header: T_str, Entries: vec_T_str>
-                T_TableSet = tuple[T_str, vec_T_str]
+                # Config struct : <Header: L_str, Entries: vec_T_str>
+                T_TableSet = tuple[L_str, vec_T_str]
 
                 if type(config) is T_TableSet:
                         if (config[0] != "") or (config[0] is not None):
@@ -196,3 +200,4 @@ class Table(Widget):
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
+
