@@ -148,8 +148,8 @@ class Table(Widget):
                 ["", ""]
         ])
 
-        WIDGET_HEADER   = Static()
-        SHOW_HEADER     = False
+        SHOW_TITLE      = False
+        SHOW_HEADER     = True
 
         # DOM
         HEADER_LAYOUT   = Static()
