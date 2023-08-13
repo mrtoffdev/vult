@@ -1,8 +1,7 @@
 from textual.widgets import Static, Input, Button
 from textual.containers import Horizontal, Vertical
 
-from util.dev_utils import log
-
+from vult.util.dev_utils import log
 
 class IInputForm:
         # Oolor

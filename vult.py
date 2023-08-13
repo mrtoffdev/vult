@@ -1,0 +1,3 @@
+import vult
+
+vult.init()

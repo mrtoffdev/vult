@@ -3,7 +3,7 @@ from textual.widgets import RadioButton, Static, RadioSet
 from textual.app import ComposeResult
 
 # Core
-from core.typedef import vec_T_str
+from vult.core.typedef import vec_T_str
 
 class SelectionGroup(Static):
         ERR_STR         = "SelectionGroup Error"

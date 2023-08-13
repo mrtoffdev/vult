@@ -1,13 +1,12 @@
-from core.typedef import vec_T_str
-
 from textual.app import ComposeResult
 from textual.widgets import Static
 from textual.containers import Vertical
 
-from view.components.Explorer import Explorer
+from vult.view.components.Explorer import Explorer
 
-from util.dev_utils import log
-from core.vult_core import Core
+from vult.util.dev_utils import log
+from vult.core.vult_core import Core
+from vult.core.typedef import vec_T_str
 
 class FileChooserDialogue(Static):
         # State
@@ -41,7 +40,7 @@ class FileChooserDialogue(Static):
                 super().__init__()
                 log("log", "Init reached")
 
-                self.rebuild_sources("./tests/")
+                self.rebuild_sources("./tests/res")
                 self.__construct()
                 log("logfile.txt", self.SOURCES)
 

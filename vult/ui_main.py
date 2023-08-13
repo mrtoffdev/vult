@@ -8,8 +8,8 @@ from textual.widgets import Static, RadioSet, RadioButton
 # Modules
 
 # Views
-from view.encoder_panel import EncoderDialogue
-from view.fm_panel import FileChooserDialogue
+from vult.view.encoder_panel import EncoderDialogue
+from vult.view.fm_panel import FileChooserDialogue
 
 # Feature Set
 # 1. Fetch source directory of videos
@@ -46,9 +46,11 @@ class Application(App[str]):
                 )
                 yield LAYOUT
 
-# Program Entry Point -----
-if __name__ == '__main__':
+def init():
+        app = Application(css_path="compress-scr.css")
+        print(app.run())
 
-    app = Application(css_path="compress-scr.css")
-    print(app.run())
+# Program Entry Point -----
+# if __name__ == '__main__':
+
 

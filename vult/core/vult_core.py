@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from util.dev_utils import log
 
 """
         Entry Collection

@@ -4,7 +4,7 @@ from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
-from core.typedef import vec_T_str, L_str
+from vult.core.typedef import vec_T_str, L_str
 
 class TableEntry(Static):
         # Default Configuration
