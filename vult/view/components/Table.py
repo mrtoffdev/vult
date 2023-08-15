@@ -109,20 +109,17 @@ class TableHeader(Static):
                 )
                 for i, header in enumerate(this.HEADER_LABELSET):
 
-                        class_holder    = ""
-
-                        if i == 0:
-                                class_holder = "header-col1 fdir-cell-name"
-                        else:
-                                class_holder = "header-col2 fdir-cell-name"
-
                         testss = Static(
                                         f"{[this.HEADER_ICONSET[i]]} "
                                         f"{this.HEADER_LABELSET[i]}",
-                                        classes=class_holder
                         )
 
-                        testss.classes = class_holder
+                        if i == 0:
+                                testss.add_class("header-col1")
+                                testss.add_class("fdir-cell-name")
+                        else:
+                                testss.add_class("header-col2")
+                                testss.add_class("fdir-cell-name")
 
                         this.LAYOUT.mount(
                                 testss
@@ -142,7 +139,7 @@ TableConfig     = tuple[L_str, vec_T_str] | dict | None
 class Table(Widget):
 
         # State
-        TITLE           = ""
+        TITLE           = reactive("")
         HEADER          = reactive(["File Name:", "Size:"])
         ENTRIES         = reactive([
                 ["", ""]
@@ -152,8 +149,8 @@ class Table(Widget):
         SHOW_HEADER     = True
 
         # DOM
-        HEADER_LAYOUT   = Static()
-        TABLE_LAYOUT    = Static()
+        HEADER_LAYOUT   = reactive(Static())
+        TABLE_LAYOUT    = reactive(Static())
 
         LAYOUT          = reactive(Static("TablWidget.LAYOUT err"))
 
@@ -193,7 +190,6 @@ class Table(Widget):
                         this.HEADER_LAYOUT,
                         this.TABLE_LAYOUT
                 )
-
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
