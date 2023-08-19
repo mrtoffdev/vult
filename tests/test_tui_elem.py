@@ -4,7 +4,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from textual.app import App, ComposeResult
 
-
 CSS_PATH = "../vult/compress-scr.css"
 
 
@@ -23,10 +22,20 @@ def test_InputForm():
 
 
 # Table --------------
-from vult.view.components.Table import Table
+from vult.view.components.Table import Table, TableHeader, TableEntry, TableConfig
 def test_Table():
 
         class TableTest(App[str]):
+                config = [
+                        ["TableTest: ", "TableTest1:"],
+                        [
+                                ["TTest Entry 1", "100"],
+                                ["TTest Entry 2", "100"],
+                                ["TTest Entry 3", "100"],
+                                ["TTest Entry 4", "100"],
+                                ["TTest Entry 5", "100"],
+                        ]
+                ]
 
                 def compose(self) -> ComposeResult:
                         # yield Static("Test Test")
@@ -42,6 +51,9 @@ def test_Table():
                         yield TableEntry(["Test Entry", "Test Entry 1"])
 
         app = TableTest(css_path=CSS_PATH)
+        # app = TableHeaderTest(css_path=CSS_PATH)
+        # app = TableEntryTest(css_path=CSS_PATH)
+
         print(app.run())
 
 if __name__ == '__main__':
