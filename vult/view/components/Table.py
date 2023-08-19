@@ -161,7 +161,6 @@ class Table(Widget):
                 super().__init__(id=id)
 
         def parse_cfg(this, config: TableConfig):
-
                 # Config struct : <Header: L_str, Entries: vec_T_str>
                 T_TableSet = list[L_str, vec_T_str]
 
@@ -173,9 +172,16 @@ class Table(Widget):
                         if (config[0] != []) or (config[0] is not None):
                                 log("log", "received table data: " +
                                     str(config))
-                                self.HEADER = config[0]
-                                self.ENTRIES = config[1]
+                                this.HEADER     = config[0]
+                                this.ENTRIES    = config[1]
                 else:
+
+                        log("log", "Table __init__ rcvd invalid config")
+                # elif type(config) is dict:
+                #         pass
+                #
+                # elif type(config) is None:
+                #         pass
 
                 this.__build_component()
 
