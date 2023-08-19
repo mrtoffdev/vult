@@ -73,7 +73,8 @@ class TableHeader(Static):
         HEADER_FG       = "#FFFFFF"
 
         # Header State
-        HEADER_ICONSET  = ['', '']
+        HEADER_ICONSET  = [u'', u'']
+        # HEADER_ICONSET  = [u'\ue64e', u'\ue706']
         HEADER_LABELSET: list = ["File Name:", "Size:"]
 
         # Layout
@@ -111,7 +112,7 @@ class TableHeader(Static):
                 for i, header in enumerate(this.HEADER_LABELSET):
 
                         testss = Static(
-                                        f"{[this.HEADER_ICONSET[i]]} "
+                                        "[" + this.HEADER_ICONSET[i] + "] "
                                         f"{this.HEADER_LABELSET[i]}",
                         )
 
