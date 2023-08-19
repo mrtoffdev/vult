@@ -29,12 +29,18 @@ def test_Table():
         class TableTest(App[str]):
 
                 def compose(self) -> ComposeResult:
-                        yield Table()
+                        # yield Static("Test Test")
+                        yield Table(id="TableOne",
+                                    config=self.config)
+
         class TableHeaderTest(App[str]):
                 def compose(self) -> ComposeResult:
                         yield TableHeader(["Test Header: ", "Test Header 2: "])
 
-        print("Table")
+        class TableEntryTest(App[str]):
+                def compose(self) -> ComposeResult:
+                        yield TableEntry(["Test Entry", "Test Entry 1"])
+
         app = TableTest(css_path=CSS_PATH)
         print(app.run())
 
