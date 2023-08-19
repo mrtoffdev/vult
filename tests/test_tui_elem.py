@@ -30,6 +30,9 @@ def test_Table():
 
                 def compose(self) -> ComposeResult:
                         yield Table()
+        class TableHeaderTest(App[str]):
+                def compose(self) -> ComposeResult:
+                        yield TableHeader(["Test Header: ", "Test Header 2: "])
 
         print("Table")
         app = TableTest(css_path=CSS_PATH)
