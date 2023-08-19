@@ -22,7 +22,7 @@ def test_InputForm():
 
 
 # Table --------------
-from vult.view.components.Table import Table, TableHeader, TableEntry, TableConfig
+from vult.view.components.Table import Table, TableHeader, TableEntry
 def test_Table():
 
         class TableTest(App[str]):
