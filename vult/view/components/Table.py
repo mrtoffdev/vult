@@ -21,7 +21,7 @@ class TableEntry(Static):
 
         # Layout Props
         ENTRY_ID        = VALUE[0]
-        LAYOUT          = reactive(Static())
+        LAYOUT          = Static("TableEntry Layout err")
 
         def __init__(self, entry: L_str = None):
                 self.parse_cfg(entry)
@@ -53,7 +53,7 @@ class TableEntry(Static):
                         ),
 
                         classes="fdir-entry",
-                        id=str(entry[0].rstrip(".mp4"))
+                        # id=str(entry[0].rstrip(".mp4"))
                 )
 
 
@@ -86,7 +86,7 @@ class TableHeader(Static):
         def parse_cfg(this, header_set: L_str, icon_set: L_str = None):
                 build = None
                 match header_set:
-                        case header_set if type(header_set) == L_str:
+                        case header_set if type(header_set) == list:
                                 this.HEADER_LABELSET = header_set
                         case None:
                                 this.HEADER_LABELSET = TableHeader.HEADER_LABELSET
@@ -141,19 +141,16 @@ class Table(Widget):
 
         # State
         TITLE           = reactive("")
-        HEADER          = reactive(["File Name:", "Size:"])
-        ENTRIES         = reactive([
+        # HEADER          = reactive(["File Name:", "Size:"])
+        HEADER          = []
+        ENTRIES         = [
                 ["", ""]
-        ])
+        ]
 
         SHOW_TITLE      = False
         SHOW_HEADER     = True
 
-        # DOM
-        HEADER_LAYOUT   = reactive(Static())
-        TABLE_LAYOUT    = reactive(Static())
-
-        LAYOUT          = reactive(Static("TablWidget.LAYOUT err"))
+        LAYOUT          = Vertical()
 
         def __init__(this,
                      config: TableConfig | dict | None = None,
