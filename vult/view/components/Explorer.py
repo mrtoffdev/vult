@@ -219,7 +219,7 @@ class Explorer(Widget):
                 # Build Header
                 this.LAYOUT     = Vertical(
                         InputForm(),
-                        Table(),
+                        Table(id="TableOne"),
                         # this.TABLE_LAYOUT,
                         # VerticalScroll(classes="w-fill h-fill-p table-fixed")
                 )
