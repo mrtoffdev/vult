@@ -21,7 +21,6 @@ written in Python, and runs on both Windows and Linux-based operating systems
 - **Presets**: Define **presets** in the TUI for quick and easy batch processing without having to touch the knobs
 - **On Point**: A **no nonsense** Terminal User Interface. Dump your videos in, wait for it to come out
 - **Flexible**: Offers both a **visual TUI** for cli enjoyers, and a **headless mode** for users who just want to get the job done
-- **Small**: **Less than 1k LOCs**. The modular architecture allows easy customization of the UI, or for simple plugin / extension development
 
 ## ⚀ Supported Source File Formats:
 - **MPEG4**[.mp4]
