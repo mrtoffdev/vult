@@ -154,11 +154,11 @@ class Table(Widget):
         LAYOUT          = Vertical()
 
         def __init__(this,
-                     config: TableConfig | dict | None = None,
-                     *children: Widget):
+                     id: str,
+                     config: TableConfig | dict | None = None):
 
                 this.parse_cfg(config)
-                super().__init__(*children)
+                super().__init__(id=id)
 
         def parse_cfg(this, config: TableConfig):
 
