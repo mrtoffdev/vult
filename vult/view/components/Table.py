@@ -4,7 +4,8 @@ from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
-from vult.core.typedef import vec_T_str, L_str
+from vult.core.typedef import vec_T_str, L_str, vec_L_str
+from vult.util.dev_utils import log
 
 class TableEntry(Static):
         # Default Configuration
@@ -16,7 +17,7 @@ class TableEntry(Static):
         ICON_2          = ""
 
         # State
-        VALUE           = ("Invalid Entry", "NaN")
+        VALUE           = ["Invalid Entry", "NaN"]
 
         # Layout Props
         ENTRY_ID        = VALUE[0]
@@ -29,7 +30,7 @@ class TableEntry(Static):
         def parse_cfg(self, entry: L_str | None = None):
                 build = None
                 match entry:
-                        case entry if type(entry) is L_str:
+                        case entry if type(entry) is list:
                                 build = entry
                         case None if type(entry) is None:
                                 build = TableEntry.VALUE
@@ -134,7 +135,7 @@ class TableHeader(Static):
 
 
 # Typing
-TableConfig     = tuple[L_str, vec_T_str] | dict | None
+TableConfig     = tuple[L_str, vec_L_str] | dict | None
 
 class Table(Widget):
 
@@ -164,17 +165,19 @@ class Table(Widget):
         def parse_cfg(this, config: TableConfig):
 
                 # Config struct : <Header: L_str, Entries: vec_T_str>
-                T_TableSet = tuple[L_str, vec_T_str]
+                T_TableSet = list[L_str, vec_T_str]
 
-                if type(config) is T_TableSet:
-                        if (config[0] != "") or (config[0] is not None):
-                                this.HEADER = config[0]
+                if type(config) is list:
 
                 elif type(config) is dict:
                         pass
 
-                elif type(config) is None:
-                        pass
+                        if (config[0] != []) or (config[0] is not None):
+                                log("log", "received table data: " +
+                                    str(config))
+                                self.HEADER = config[0]
+                                self.ENTRIES = config[1]
+                else:
 
                 this.__build_component()
 
