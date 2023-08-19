@@ -186,17 +186,14 @@ class Table(Widget):
                 this.__build_component()
 
         def __build_component(this):
-                this.HEADER_LAYOUT      = TableHeader(this.HEADER)
-                this.TABLE_LAYOUT       = Vertical()
+                HEADER_LAYOUT      = TableHeader(this.HEADER)
+                TABLE_LAYOUT       = Vertical()
 
                 # Dynamically mount entries
                 for entry in this.ENTRIES:
-                        this.TABLE_LAYOUT.mount(TableEntry(entry=entry))
-
-                this.LAYOUT = Vertical (
-                        this.HEADER_LAYOUT,
-                        this.TABLE_LAYOUT
-                )
+                        TABLE_LAYOUT.mount(TableEntry(entry))
+                this.LAYOUT.mount(HEADER_LAYOUT)
+                this.LAYOUT.mount(TABLE_LAYOUT)
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
