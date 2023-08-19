@@ -166,8 +166,7 @@ class Table(Widget):
 
                 if type(config) is list:
 
-                elif type(config) is dict:
-                        pass
+                        log("log", "Table __init__ rcvd valid config")
 
                         if (config[0] != []) or (config[0] is not None):
                                 log("log", "received table data: " +
@@ -197,4 +196,10 @@ class Table(Widget):
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
+
+        def set_data(this, data):
+                this.ENTRIES = data
+
+        def watch_ENTRIES(self, ENTRIES: list):
+                pass
 
