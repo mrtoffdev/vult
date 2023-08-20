@@ -56,5 +56,15 @@ def test_Table():
 
         print(app.run())
 
+from vult.view.components.Explorer import Explorer
+def test_Explorer():
+        class ExplorerTest(App[str]):
+                def compose(self) -> ComposeResult:
+                        yield Explorer()
+
+        app = ExplorerTest(css_path=CSS_PATH)
+        print(app.run())
+
 if __name__ == '__main__':
-        test_Table()
+        test_Explorer()
+        # test_Table()
