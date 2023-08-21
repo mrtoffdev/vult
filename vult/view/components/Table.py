@@ -143,7 +143,7 @@ class Table(Widget):
         # State
         TITLE           = reactive("")
         # HEADER          = reactive(["File Name:", "Size:"])
-        HEADER          = []
+        HEADER          = ["File Name:", "Size:"]
         ENTRIES         = [
                 ["", ""]
         ]
@@ -190,7 +190,8 @@ class Table(Widget):
 
                 # Dynamically mount entries
                 for entry in this.ENTRIES:
-                        TABLE_LAYOUT.mount(TableEntry(entry))
+                        if entry != ["", ""]:
+                                TABLE_LAYOUT.mount(TableEntry(entry))
                 this.LAYOUT.mount(HEADER_LAYOUT)
                 this.LAYOUT.mount(TABLE_LAYOUT)
 
