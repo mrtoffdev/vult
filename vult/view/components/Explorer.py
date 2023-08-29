@@ -23,8 +23,8 @@ from .Table import TableHeader, TableEntry, Table
 #       # Behavior: Dynamic. Blank Defaults
 '''
 
-def __err():
-        return "ExplorerConfig init err"
+# def __err():
+#         return "ExplorerConfig init err"
 
 # Dir Tree Widget -------
 class ExpFilter(DirectoryTree):
@@ -61,7 +61,7 @@ class ExplorerLayout:
 
 
 
-        def resolve(this, config: dict):
+        def resolve(self, config: dict):
                 def __nullish(value, default):
                         match value:
                                 case None | "" | '' | ():
@@ -101,19 +101,19 @@ class ExplorerLayout:
 
                                 # Define as pair
                                 case 'sfb_set':
-                                        this.SF_BTN_SET = (
+                                        self.SF_BTN_SET = (
                                                 __nullish(config['sfb_set'],
                                                           ExplorerLayout.SF_BTN_SET)
                                         )
 
                                 # Define individually
                                 case 's_icon':
-                                        this.SF_BTN_SET[0] = (
+                                        self.SF_BTN_SET[0] = (
                                                 __nullish(config['s_icon'],
                                                           ExplorerLayout.SF_BTN_SET[0])
                                         )
                                 case 's_label':
-                                        this.SF_BTN_SET[1] = (
+                                        self.SF_BTN_SET[1] = (
                                                 __nullish(config['s_label'],
                                                           ExplorerLayout.SF_BTN_SET[1])
                                         )
@@ -122,20 +122,20 @@ class ExplorerLayout:
 
                                 # Define as pair
                                 case 'sff_set':
-                                        this.SF_FLD_SET = (
+                                        self.SF_FLD_SET = (
                                                 __nullish(config['sff_set'],
                                                           ExplorerLayout.SF_FLD_SET)
                                         )
 
                                 # Define individually
                                 case 'sbox_icon':
-                                        this.SF_FLD_SET[0] = (
+                                        self.SF_FLD_SET[0] = (
                                                 __nullish(config['sbox_icon'],
                                                           ExplorerLayout.SF_FLD_SET[0])
                                         )
 
                                 case 'sbox_hint':
-                                        this.SF_FLD_SET[1] = (
+                                        self.SF_FLD_SET[1] = (
                                                 __nullish(config['sbox_hint'],
                                                           ExplorerLayout.SF_FLD_SET[1])
                                         )
@@ -144,11 +144,12 @@ class ExplorerLayout:
                                 case 'table_header':
                                         pass
 
-        def parse_cfg(this, config: dict = None):
-                this.resolve(config)
+        def parse_cfg(self, config: dict | None = None):
+                if type(config) is dict:
+                        self.resolve(config)
 
-        def __init__(this, in_cfg: dict):
-                this.parse_cfg(in_cfg)
+        def __init__(self, in_cfg: dict):
+                self.parse_cfg(in_cfg)
 
 class Explorer(Widget):
 
@@ -190,37 +191,37 @@ class Explorer(Widget):
 
         # ===== DOM Operations =====
 
-        def __init__(this,
+        def __init__(self,
                      config: ExplorerLayout | dict | None = None,
                      classes=None,
                      id=None, *children: Widget):
 
                 super().__init__(*children, id=id, classes=classes)
-                this.parse_cfg(config)
+                self.parse_cfg(config)
 
-        def parse_cfg(this, config: ExplorerLayout | dict):
+        def parse_cfg(self, config: ExplorerLayout | dict):
                 if type(config) is dict:
-                        this.CONFIG = ExplorerLayout(config)
+                        self.CONFIG = ExplorerLayout(config)
                 elif type(config) is ExplorerLayout:
-                        this.CONFIG = config
+                        self.CONFIG = config
                 elif type(config) is None:
-                        this.CONFIG = Explorer.DEFAULT_LAYOUT
+                        self.CONFIG = Explorer.DEFAULT_LAYOUT
 
-                this.__build_component()
+                self.__build_component()
 
-        def __build_component(this):
+        def __build_component(self):
                 # log("log", f"entries: {str(entries)}")
                 # Build Table
-                for entry in this.TABLE_ENTRIES:
+                for entry in self.TABLE_ENTRIES:
                         if entry != ("", ""):
                                 entry = TableEntry(entry)
-                                this.TABLE_LAYOUT.mount(entry)
+                                self.TABLE_LAYOUT.mount(entry)
 
                 # Build Header
-                this.LAYOUT     = Vertical(
+                self.LAYOUT     = Vertical(
                         InputForm(),
                         Table(id="TableOne"),
-                        # this.TABLE_LAYOUT,
+                        # self.TABLE_LAYOUT,
                         # VerticalScroll(classes="w-fill h-fill-p table-fixed")
                 )
 

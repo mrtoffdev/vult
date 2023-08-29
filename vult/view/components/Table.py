@@ -23,7 +23,7 @@ class TableEntry(Static):
         ENTRY_ID        = VALUE[0]
         LAYOUT          = Static("TableEntry Layout err")
 
-        def __init__(self, entry: L_str = None):
+        def __init__(self, entry: L_str | None = None):
                 self.parse_cfg(entry)
                 super().__init__()
 
@@ -37,11 +37,12 @@ class TableEntry(Static):
 
                 self.__build_component(build)
 
-        def __build_component(this, entry: L_str | None):
-                this.LAYOUT = Horizontal(
-                        Static(
-                                TableEntry.ICON_1 +
-                                str(entry[0]),
+        def __build_component(self, entry: L_str | None):
+                if type(entry) is L_str:
+                        self.LAYOUT = Horizontal(
+                                Static(
+                                        TableEntry.ICON_1 +
+                                        str(entry[0]),
 
                                 classes="fdir-cell-name"
                         ),
@@ -84,36 +85,37 @@ class TableHeader(Static):
                 self.parse_cfg(header_set=header)
                 super().__init__()
 
-        def parse_cfg(this, header_set: L_str, icon_set: L_str = None):
-                build = None
+        def parse_cfg(self, header_set: L_str | None, icon_set: L_str | None = None):
                 match header_set:
                         case header_set if type(header_set) == list:
-                                this.HEADER_LABELSET = header_set
+                                self.HEADER_LABELSET = header_set
                         case None:
-                                this.HEADER_LABELSET = TableHeader.HEADER_LABELSET
+                                self.HEADER_LABELSET = TableHeader.HEADER_LABELSET
 
                 match icon_set:
                         case icon_set if type(icon_set) == L_str:
-                                this.HEADER_ICONSET = icon_set
+                                self.HEADER_ICONSET = icon_set
                         case None:
-                                this.HEADER_ICONSET = TableHeader.HEADER_ICONSET
+                                self.HEADER_ICONSET = TableHeader.HEADER_ICONSET
 
-                this.__build_component()
+                self.__build_component()
 
-        def __build_component(this):
-                this.LAYOUT = Horizontal(
-                        # Static(f"{[this.HEADER_ICONSET[0]]} {this.HEADER_LABELSET[0]}",
+        def __build_component(self):
+                self.LAYOUT = Horizontal(
+                        # Static(f"{[self.HEADER_ICONSET[0]]} {this.HEADER_LABELSET[0]}",
                         #        classes="header-col1 fdir-cell-name"),
-                        # Static(f"{[this.HEADER_ICONSET[1]]} {this.HEADER_LABELSET[1]}",
+                        # Static(f"{[self.HEADER_ICONSET[1]]} {this.HEADER_LABELSET[1]}",
                         #        classes="header-col2 fdir-cell-size"),
 
                         classes="fdir-entry",
                 )
-                for i, header in enumerate(this.HEADER_LABELSET):
+                for i, header in enumerate(self.HEADER_LABELSET):
 
                         testss = Static(
                                         "[" + this.HEADER_ICONSET[i] + "] "
                                         f"{this.HEADER_LABELSET[i]}",
+                                        "[" + self.HEADER_ICONSET[i] + "] "
+                                        f"{header}",
                         )
 
                         if i == 0:
@@ -123,11 +125,11 @@ class TableHeader(Static):
                                 testss.add_class("header-col2")
                                 testss.add_class("fdir-cell-name")
 
-                        this.LAYOUT.mount(
+                        self.LAYOUT.mount(
                                 testss
                                 # Static(
-                                #         f"{[this.HEADER_ICONSET[i]]}"
-                                #         f" {this.HEADER_LABELSET[i]}",
+                                #         f"{[self.HEADER_ICONSET[i]]}"
+                                #         f" {self.HEADER_LABELSET[i]}",
                                 # )
                         )
 
@@ -153,16 +155,16 @@ class Table(Widget):
 
         LAYOUT          = Vertical()
 
-        def __init__(this,
+        def __init__(self,
                      id: str,
                      config: TableConfig | dict | None = None):
 
-                this.parse_cfg(config)
+                self.parse_cfg(config)
                 super().__init__(id=id)
 
-        def parse_cfg(this, config: TableConfig):
+        def parse_cfg(self, config: TableConfig):
                 # Config struct : <Header: L_str, Entries: vec_T_str>
-                T_TableSet = list[L_str, vec_T_str]
+                # T_TableSet = list[L_str, vec_T_str]
 
                 if type(config) is list:
 
@@ -171,8 +173,8 @@ class Table(Widget):
                         if (config[0] != []) or (config[0] is not None):
                                 log("log", "received table data: " +
                                     str(config))
-                                this.HEADER     = config[0]
-                                this.ENTRIES    = config[1]
+                                self.HEADER     = config[0]
+                                self.ENTRIES    = config[1]
                 else:
 
                         log("log", "Table __init__ rcvd invalid config")
@@ -182,24 +184,24 @@ class Table(Widget):
                 # elif type(config) is None:
                 #         pass
 
-                this.__build_component()
+                self.__build_component()
 
-        def __build_component(this):
-                HEADER_LAYOUT      = TableHeader(this.HEADER)
+        def __build_component(self):
+                HEADER_LAYOUT      = TableHeader(self.HEADER)
                 TABLE_LAYOUT       = Vertical()
 
                 # Dynamically mount entries
-                for entry in this.ENTRIES:
+                for entry in self.ENTRIES:
                         if entry != ["", ""]:
                                 TABLE_LAYOUT.mount(TableEntry(entry))
-                this.LAYOUT.mount(HEADER_LAYOUT)
-                this.LAYOUT.mount(TABLE_LAYOUT)
+                self.LAYOUT.mount(HEADER_LAYOUT)
+                self.LAYOUT.mount(TABLE_LAYOUT)
 
         def compose(self) -> ComposeResult:
                 yield self.LAYOUT
 
-        def set_data(this, data):
-                this.ENTRIES = data
+        def set_data(self, data):
+                self.ENTRIES = data
 
         def watch_ENTRIES(self, ENTRIES: list):
                 pass

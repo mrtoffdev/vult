@@ -19,8 +19,8 @@ class FileChooserDialogue(Static):
         def rebuild_sources(self, source: str):
                 self.SOURCES = Core.build_sources(source)
 
-        def __construct(this):
-                this.LAYOUT     = Vertical(
+        def __construct(self):
+                self.LAYOUT     = Vertical(
                         # Sources Explorer
                         Explorer(
                                 classes="w-fill h-half-p",

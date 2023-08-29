@@ -20,7 +20,7 @@ class IInputForm:
         ID              = None
         CSS_PATH        = None
 
-        def __resolve(this, config: dict):
+        def __resolve(self, config: dict[str, str]):
                 def __nullish(value, default):
                         match value:
                                 case None | "" | '' | ():
@@ -32,41 +32,41 @@ class IInputForm:
                         match key:
                                 # Color
                                 case 'fbg':
-                                        this.FIELD_BG           = __nullish(config[key],
+                                        self.FIELD_BG           = __nullish(config[key],
                                                                 IInputForm.FIELD_BG)
                                 case 'ffg':
-                                        this.FIELD_FG           = __nullish(config[key],
+                                        self.FIELD_FG           = __nullish(config[key],
                                                                 IInputForm.FIELD_FG)
                                 case 'title':
-                                        this.TITLE              = __nullish(config[key],
+                                        self.TITLE              = __nullish(config[key],
                                                                 IInputForm.TITLE)
 
                                 # Submit Button
                                 case 'sb-set':
-                                        this.SBUTTON_SET        = __nullish(config[key],
+                                        self.SBUTTON_SET        = __nullish(config[key],
                                                                 IInputForm.SBUTTON_SET)
                                 case 'sb-label':
-                                        this.SBUTTON_SET[0]     = __nullish(config[key],
+                                        self.SBUTTON_SET[0]     = __nullish(config[key],
                                                                 IInputForm.SBUTTON_SET[0])
                                 case 'sb-icon':
-                                        this.SBUTTON_SET[1]     = __nullish(config[key],
+                                        self.SBUTTON_SET[1]     = __nullish(config[key],
                                                                 IInputForm.SBUTTON_SET[1])
 
                                 # Input Field
                                 case 'sf-set':
-                                        this.SFIELD_SET         = __nullish(config[key],
+                                        self.SFIELD_SET         = __nullish(config[key],
                                                                 IInputForm.SFIELD_SET)
                                 case 'sf-label':
-                                        this.SFIELD_SET[0]      = __nullish(config[key],
+                                        self.SFIELD_SET[0]      = __nullish(config[key],
                                                                 IInputForm.SFIELD_SET[0])
                                 case 'sf-icon':
-                                        this.SFIELD_SET[1]      = __nullish(config[key],
+                                        self.SFIELD_SET[1]      = __nullish(config[key],
                                                                 IInputForm.SFIELD_SET[1])
 
-        def parse_cfg(this, config):
-                this.__resolve(config)
-        def __init__(this, config: dict) -> None:
-                this.parse_cfg(config)
+        def parse_cfg(self, config):
+                self.__resolve(config)
+        def __init__(self, config: dict[str, str]) -> None:
+                self.parse_cfg(config)
                 # self.HEADER             = config["header"]
                 # self.SEARCH_ICON        = config["s_icon"]
                 # self.HINT               = config["hint"]
@@ -84,43 +84,43 @@ class InputForm(Static):
 
         LAYOUT          = Static("FSearchWidget.LAYOUT err")
 
-        def parse_cfg(this, config: dict | IInputForm):
+        def parse_cfg(self, config: dict[str, str] | IInputForm):
                 log("log", f"__parse rcvd: {str(config)}")
 
                 # Dict initialization
                 if type(config) is dict:
-                        this.CONFIG = IInputForm(config)
+                        self.CONFIG = IInputForm(config)
 
                 # Config initialization
                 elif type(config) is IInputForm:
-                        this.CONFIG = config
+                        self.CONFIG = config
 
                 elif type(config) is None:
-                        this.CONFIG = InputForm.CONFIG
+                        self.CONFIG = InputForm.CONFIG
 
-                this.__build_component()
+                self.__build_component()
 
 
-        def __init__(self, config=CONFIG, id=None):
+        def __init__(self, config: dict[str,str] | IInputForm=CONFIG, id=None):
                 self.parse_cfg(config)
                 super().__init__(id=id)
 
 
-        def __build_component(this):
+        def __build_component(self):
                 log("log", f"IForm __build()")
-                this.LAYOUT = Vertical(
+                self.LAYOUT = Vertical(
                         # Widget Header
-                        Static(f"{this.CONFIG.TITLE}:",
+                        Static(f"{self.CONFIG.TITLE}:",
                                classes="dialogue-header-top"),
 
                         # Input Form (Box + Button)
                         Horizontal(
-                                Input(placeholder=f"[{this.CONFIG.SFIELD_SET[1]}] "
-                                                  f"{this.CONFIG.SFIELD_SET[0]}",
+                                Input(placeholder=f"[{self.CONFIG.SFIELD_SET[1]}] "
+                                                  f"{self.CONFIG.SFIELD_SET[0]}",
                                         id="Search-field"),
 
-                                Button(f"[{this.CONFIG.SBUTTON_SET[1]}] "
-                                       f"{this.CONFIG.SBUTTON_SET[0]}",
+                                Button(f"[{self.CONFIG.SBUTTON_SET[1]}] "
+                                       f"{self.CONFIG.SBUTTON_SET[0]}",
                                         id="Search-button"),
 
                                 id="Search-widget"
