@@ -10,28 +10,29 @@ from vult.core.typedef import vec_T_str
 
 class FileChooserDialogue(Static):
         # State
-        SOURCES: vec_T_str      = vec_T_str
+        SOURCES                 = vec_T_str
 
         # DOM
         CSS_PATH                = "compress-scr.css"
         LAYOUT                  = Static()
 
         def rebuild_sources(self, source: str):
+                log('log', 'building sources from src dir')
                 self.SOURCES = Core.build_sources(source)
 
         def __construct(self):
                 self.LAYOUT     = Vertical(
                         # Sources Explorer
                         Explorer(
-                                classes="w-fill h-half-p",
-                                id="source-panel"
+                                # classes="w-fill h-half-p",
+                                # id="source-panel"
                         ),
 
                         # Output Explorer
-                        Explorer(
-                                classes="w-fill h-half-p",
-                                id="output-panel"
-                        ),
+                        # Explorer(
+                        #         # classes="w-fill h-half-p",
+                        #         # id="output-panel"
+                        # ),
 
                         classes="pad-s"
                 )
@@ -40,7 +41,7 @@ class FileChooserDialogue(Static):
                 super().__init__()
                 log("log", "Init reached")
 
-                self.rebuild_sources("./tests/res")
+                self.rebuild_sources("tests/res")
                 self.__construct()
                 log("logfile.txt", self.SOURCES)
 

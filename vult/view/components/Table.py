@@ -4,7 +4,7 @@ from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
-from vult.core.typedef import vec_T_str, L_str, vec_L_str
+from vult.core.typedef import L_str, vec_L_str
 from vult.util.dev_utils import log
 
 class TableEntry(Static):
@@ -44,18 +44,18 @@ class TableEntry(Static):
                                         TableEntry.ICON_1 +
                                         str(entry[0]),
 
-                                classes="fdir-cell-name"
-                        ),
-                        Static(
-                                TableEntry.ICON_2 +
-                                str(entry[1]),
+                                        classes="fdir-cell-name"
+                                ),
+                                Static(
+                                        TableEntry.ICON_2 +
+                                        str(entry[1]),
 
-                                classes="fdir-cell-size"
-                        ),
+                                        classes="fdir-cell-size"
+                                ),
 
-                        classes="fdir-entry",
-                        # id=str(entry[0].rstrip(".mp4"))
-                )
+                                classes="fdir-entry",
+                                # id=str(entry[0].rstrip(".mp4"))
+                        )
 
 
         def compose(self) -> ComposeResult:
@@ -112,8 +112,6 @@ class TableHeader(Static):
                 for i, header in enumerate(self.HEADER_LABELSET):
 
                         testss = Static(
-                                        "[" + this.HEADER_ICONSET[i] + "] "
-                                        f"{this.HEADER_LABELSET[i]}",
                                         "[" + self.HEADER_ICONSET[i] + "] "
                                         f"{header}",
                         )
@@ -203,6 +201,6 @@ class Table(Widget):
         def set_data(self, data):
                 self.ENTRIES = data
 
-        def watch_ENTRIES(self, ENTRIES: list):
-                pass
+        # def watch_ENTRIES(self, ENTRIES: list):
+        #         pass
 
