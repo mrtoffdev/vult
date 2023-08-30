@@ -51,12 +51,14 @@ TEST_SIZES_STR = [
         "0", "15", "20", "15402323", "523", "12"
 ]
 
+from datetime import datetime
 def log(logfile: str, entry):
-        LOGFILE = 0
         if not os.path.isfile(logfile):
                 open(logfile, "x")
 
-        LOGFILE     = open(logfile, "at")
+        LOGFILE         = open(logfile, "at")
+        TIMESTAMP       = datetime.now()
 
-        LOGFILE.write(str(entry) + '\n')
+        LOGFILE.write(f'[{str(TIMESTAMP.date())} | {str(TIMESTAMP.strftime("%H:%M:%S"))}] - '
+                      f'{str(entry)} \n')
         LOGFILE.close()
