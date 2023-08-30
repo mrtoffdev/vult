@@ -28,8 +28,8 @@ import ffmpeg
 
 class Core:
         @staticmethod
-        def validate_file(source_dir: str | Path, file: str | Path) -> bool:
-                log("fs", "bs file found & validating: " + str(file))
+        def validate_file(file: str | Path) -> bool:
+                log("fs", "Received file to be validated: " + str(file))
 
                 # Vult Supported Formats
                 SUPPORTED_FORMATS = [
@@ -39,13 +39,15 @@ class Core:
                     ".avi"
                 ]
 
-                # log("fs", "bs file check: " + str(os.path.isfile(str(source_dir) +
-                # log("fs", "bs split result: " + str(os.path.splitext(file)))
-                if (os.path.isfile(str(source_dir) + str(file)) and
-                        os.path.splitext(file)[1] in SUPPORTED_FORMATS):
-                        log('log', 'File is valid')
+                STATUS: bool    = False
+                IS_FILE: bool   = os.path.isfile(file)
+                EXTENSION: str  = os.path.splitext(file)[1]
+
+                # Placeholder for possible extension
+                if IS_FILE and EXTENSION in SUPPORTED_FORMATS:
+                        STATUS = True
                 else:
-                        log('log', 'File is invalid')
+                        STATUS = False
 
                 # Validate
                 return STATUS
@@ -72,9 +74,10 @@ class Core:
                 src_path = Core.build_path(source_dir)
 
                 paths = sorted([
-                        file for file in os.listdir(Path(source_dir_extended)) if
-                        Core.validate_file(source_dir_extended, file)
+                        file for file in os.listdir(Path(src_path)) if
+                        Core.validate_file(src_path)
                 ])
+
                 '''
                         ==== Transcoding resolution =====
                         Input Formats: mp4, avi, mkv
@@ -83,6 +86,7 @@ class Core:
                         Codec: h265, avi (beta)
                         
                 '''
+
                 log('log', f'Received Src Dir: {source_dir}')
                 log('log', f'Built Files: {str(paths)}')
 
