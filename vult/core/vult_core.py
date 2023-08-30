@@ -48,15 +48,28 @@ class Core:
                         log('log', 'File is invalid')
 
                 # Validate
-                return (os.path.isfile(str(source_dir) + str(file)) and
-                        os.path.splitext(file)[1] in SUPPORTED_FORMATS)
+                return STATUS
+
+        @staticmethod
+        def build_path(dir: str | Path):
+
+                DIR_PATH: str
+                PREFIX_SLICE = dir[0:3]
+
+                if PREFIX_SLICE[0] == '/':
+                        DIR_PATH = dir
+                elif PREFIX_SLICE[0:2] == './':
+                        DIR_PATH = os.path.join(os.getcwd(), dir.lstrip('./'))
+                elif PREFIX_SLICE[0:3] == '../':
+                        DIR_PATH = os.path.join(os.getcwd(), '..', dir.lstrip('../'))
+                else:
+                        DIR_PATH = 'invalid'
+
+                return DIR_PATH
 
         @staticmethod
         def build_sources(source_dir: str | Path) -> [(str, str)]:
-                # log("fs", "bs path rcv: " + source_dir)
-                source_dir_extended = os.getcwd() + '/' + source_dir
-                log('log', f'CWD: {os.getcwd()}')
-                log('log', f'full path: {source_dir_extended}')
+                src_path = Core.build_path(source_dir)
 
                 paths = sorted([
                         file for file in os.listdir(Path(source_dir_extended)) if
