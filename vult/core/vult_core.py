@@ -78,9 +78,11 @@ class Core:
                 src_path = Core.build_path(source_dir)
                 log('log', f'build_sources(): received {str(src_path)}')
 
+                # Generating absolute paths from filenames
                 paths = sorted([
-                        file for file in os.listdir(Path(src_path)) if
-                        Core.validate_file(src_path)
+                        os.path.join(src_path, file) for file \
+                        in os.listdir(Path(src_path)) \
+                        if Core.validate_file(os.path.join(src_path, file))
                 ])
 
                 '''
