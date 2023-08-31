@@ -50,6 +50,7 @@ class Core:
                         STATUS = False
 
                 # Validate
+                log('fs', f'validate_file(): status: {str(STATUS)}')
                 return STATUS
 
         @staticmethod
