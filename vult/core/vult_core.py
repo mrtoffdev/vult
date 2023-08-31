@@ -84,6 +84,13 @@ class Core:
                         in os.listdir(Path(src_path)) \
                         if Core.validate_file(os.path.join(src_path, file))
                 ])
+                log('log', f'Built Files: {str(paths)}')
+
+                # Split filenames from paths
+                file_names = [
+                        name.split('/')[len(name.split('/')) - 1] for name in paths
+                ]
+                log('log', f'build_sources() > filenames: {str(file_names)}')
 
                 '''
                         ==== Transcoding resolution =====
