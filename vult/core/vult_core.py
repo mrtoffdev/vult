@@ -109,11 +109,11 @@ class Core:
                         ffmpeg.input(file) for file  in paths
                 ])
 
-
-                # Generate FFMPEG models from paths
+                # Parse file sizes
                 sizes = [
-                        os.path.getsize(str(source_dir) + path) for path in paths
+                        os.path.getsize(str(path)) for path in paths
                 ]
+                log('fs', f'build_sources() > sizes: {str(sizes)}')
 
                 # Test file codec detail fetching
                 for path in paths:
