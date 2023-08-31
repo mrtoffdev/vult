@@ -101,10 +101,7 @@ class Core:
                         
                 '''
 
-                log('log', f'Received Src Dir: {source_dir}')
-                log('log', f'Built Files: {str(paths)}')
-
-                # Fetch valid files from source dir
+                # Generate FFMPEG models from paths
                 files = ([
                         ffmpeg.input(file) for file  in paths
                 ])
