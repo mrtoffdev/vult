@@ -3,8 +3,10 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from vult.core.vult_core import Core
+from vult.util.dev_utils import log
 
 if __name__ == '__main__':
+        log('log', '===== Init [test_core] =====')
         print(f'Working Directory: {os.getcwd()}')
         test_src_dir    = "./tests/res"
         # test_src_dir    = "./tests/res"
