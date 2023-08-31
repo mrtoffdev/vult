@@ -117,7 +117,11 @@ class Core:
 
                 # Test file codec detail fetching
                 for path in paths:
-                        log('log',f'Codec info: {ffmpeg.probe(path)}')
+                        try:
+                                log('log',f'Codec info: {ffmpeg.probe(path)}')
+                        except ffmpeg._run.Error:
+                                log('log', f'build_sources() > ffmpeg probe: Invalid '
+                                           f'File {path}')
 
                 # log("fs", "paths: " + str(paths))
                 # log("logfile.txt", "From rebuild_sources: paths=" + str(paths))
