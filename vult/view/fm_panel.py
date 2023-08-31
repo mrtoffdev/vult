@@ -41,7 +41,7 @@ class FileChooserDialogue(Static):
                 super().__init__()
                 log("log", "Init reached")
 
-                self.rebuild_sources("tests/res")
+                self.rebuild_sources("./tests/res")
                 self.__construct()
                 log("logfile.txt", self.SOURCES)
 
