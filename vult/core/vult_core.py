@@ -71,7 +71,11 @@ class Core:
 
         @staticmethod
         def build_sources(source_dir: str | Path) -> [(str, str)]:
+                log('log', f'build_sources(): received {str(source_dir)}')
+
+                # Build absolute path from input src_dir
                 src_path = Core.build_path(source_dir)
+                log('log', f'build_sources(): received {str(src_path)}')
 
                 paths = sorted([
                         file for file in os.listdir(Path(src_path)) if
