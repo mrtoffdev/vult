@@ -66,7 +66,7 @@ class Core:
                 elif PREFIX_SLICE[0:3] == '../':
                         DIR_PATH = os.path.join(os.getcwd(), '..', dir.lstrip('../'))
                 else:
-                        DIR_PATH = 'invalid'
+                        DIR_PATH = os.path.join(os.getcwd(), dir)
 
                 return DIR_PATH
 
