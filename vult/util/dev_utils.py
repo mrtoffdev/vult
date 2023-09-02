@@ -52,13 +52,32 @@ TEST_SIZES_STR = [
 ]
 
 from datetime import datetime
-def log(logfile: str, entry):
+from typing import Literal
+# from json import loads, dumps
+import pprint
+import simplejson as sj
+
+LOGMODES = (Literal['json'] |
+            Literal['default'])
+def log(logfile: str, entry, mode: LOGMODES = 'default'):
         if not os.path.isfile(logfile):
                 open(logfile, "x")
 
         LOGFILE         = open(logfile, "at")
         TIMESTAMP       = datetime.now()
+        ENTRYFMT        = entry
 
-        LOGFILE.write(f'[{str(TIMESTAMP.date())} | {str(TIMESTAMP.strftime("%H:%M:%S"))}] - '
-                      f'{str(entry)} \n')
+        # Refactor if adding modes > Replace w/ pmatch
+        # ENTRYFMT = dumps(loads(entry), indent=4) if mode == 'json' else entry
+        if mode == 'json':
+                ENTRYOBJ = sj.loads(entry)
+                ENTRYFMT = sj.dumps(ENTRYOBJ)
+                print(ENTRYFMT)
+                # pprint.pprint(ENTRYFMT, indent=4, stream=LOGFILE)
+
+        else:
+                LOGFILE.write(f'[{str(TIMESTAMP.date())} | {str(TIMESTAMP.strftime("%H:%M:%S"))}] - '
+                              f'{str(ENTRYFMT)} \n')
+
+
         LOGFILE.close()

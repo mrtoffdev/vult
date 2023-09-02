@@ -115,7 +115,8 @@ class Core:
                 # Test file codec detail fetching
                 for path in paths:
                         try:
-                                log('log',f'Codec info: {ffmpeg.probe(path)}')
+                                log('log',f'Codec info:')
+                                log('log', f'{ffmpeg.probe(path)}', mode='json')
                         except ffmpeg._run.Error:
                                 log('log', f'build_sources() > ffmpeg probe: Invalid '
                                            f'File {path}')
