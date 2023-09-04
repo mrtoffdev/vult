@@ -124,6 +124,41 @@ class Core:
                 # log("fs", "paths: " + str(paths))
                 # log("logfile.txt", "From rebuild_sources: paths=" + str(paths))
 
+                def validate_codec(entry) -> bool:
+                        try:
+                                probe_result = ffmpeg.probe(entry)
+                                return probe_result != "" or probe_result is not None
+
+                        except ffmpeg._run.Error:
+                                return False
+
+
+
+
+                VALIDATED_PATH = [
+                        entry for entry in paths if validate_codec(entry)
+                ]
+
+                for path in VALIDATED_PATH:
+                        log('log', f'{str(path)}')
+
+                '''
+                FFMPEG CLI Options:
+                -fpsmax
+                -vcodec
+                -aspect (Container Level, not Frame Level)
+                -pass (1pass / 2pass encoding)
+                -pixfmt
+                -cuda (for nvidia hardware)
+                -opencl (for OpenCL acceleration)
+                -init_hw_device [name]
+                -init_hw_device list
+                -hwaccel [ use w/ driver (vdpau, dxva2, vaapi, d3d11va)
+                -preset [val]
+                -c:v (codec)
+                -crf [val]
+                '''
+
                 return list(zip(paths, sizes))
 
 
